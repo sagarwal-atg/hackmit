@@ -249,7 +249,7 @@
         
         //environment
         //FLAG - IMPORTANT BOOLEAN HERE
-        playerIDHWL = 0;
+        playerIDHWL = 1;
         [[NSUserDefaults standardUserDefaults] setInteger:playerIDHWL forKey:@"playerID"];
         if (playerIDHWL == 0) {
             
@@ -263,7 +263,7 @@
             int asteroidID = 0;
             int numAsts = 0;
             for (int int1 = 0; int1 <= 11; int1++) {
-                for (int int2 = 0; int2 <= 13; int2++) {
+                for (int int2 = 0; int2 <= 15; int2++) {
                     
                     int createAsteroid = arc4random() % 3;
                     
@@ -280,7 +280,7 @@
                         }
                         
                         float randnum1 = ((float)int1-5.0)*88.0;
-                        float randnum2 = ((float)int2+1.2)*250.0;
+                        float randnum2 = ((float)int2+1.2)*240.0;
                         
                         int randnum4 = (arc4random() % 2001) - 1000;
                         int randnum5 = (arc4random() % 21);

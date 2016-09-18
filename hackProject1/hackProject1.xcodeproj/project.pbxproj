@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		FC2117C21D8E9D36008446EF /* congrats.png in Resources */ = {isa = PBXBuildFile; fileRef = FC2117C11D8E9D36008446EF /* congrats.png */; };
+		FC2117C41D8ED349008446EF /* Blip 019.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC2117C31D8ED349008446EF /* Blip 019.wav */; };
+		FC2117C61D8ED3BB008446EF /* Kick 002.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC2117C51D8ED3BB008446EF /* Kick 002.wav */; };
+		FC2117C81D8ED40C008446EF /* Blip 008.wav in Resources */ = {isa = PBXBuildFile; fileRef = FC2117C71D8ED40C008446EF /* Blip 008.wav */; };
 		FC38A0141D8E599000C112C5 /* finishflag.png in Resources */ = {isa = PBXBuildFile; fileRef = FC38A0121D8E599000C112C5 /* finishflag.png */; };
 		FC38A0151D8E599000C112C5 /* redwarning.png in Resources */ = {isa = PBXBuildFile; fileRef = FC38A0131D8E599000C112C5 /* redwarning.png */; };
 		FC3B8AF31D8E690500E476A3 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AEE1D8E690500E476A3 /* FirebaseAnalytics.framework */; };
@@ -317,6 +320,9 @@
 
 /* Begin PBXFileReference section */
 		FC2117C11D8E9D36008446EF /* congrats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = congrats.png; sourceTree = "<group>"; };
+		FC2117C31D8ED349008446EF /* Blip 019.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Blip 019.wav"; sourceTree = "<group>"; };
+		FC2117C51D8ED3BB008446EF /* Kick 002.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Kick 002.wav"; sourceTree = "<group>"; };
+		FC2117C71D8ED40C008446EF /* Blip 008.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Blip 008.wav"; sourceTree = "<group>"; };
 		FC38A0121D8E599000C112C5 /* finishflag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finishflag.png; sourceTree = "<group>"; };
 		FC38A0131D8E599000C112C5 /* redwarning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redwarning.png; sourceTree = "<group>"; };
 		FC3B8AEE1D8E690500E476A3 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
@@ -955,6 +961,9 @@
 			isa = PBXGroup;
 			children = (
 				FC3F52291D8DA0C000FD433A /* Info.plist */,
+				FC2117C31D8ED349008446EF /* Blip 019.wav */,
+				FC2117C51D8ED3BB008446EF /* Kick 002.wav */,
+				FC2117C71D8ED40C008446EF /* Blip 008.wav */,
 				FC3F522A1D8DA0C000FD433A /* iTunesArtwork */,
 				FC3F522C1D8DA0C000FD433A /* iTunesArtwork@2x */,
 				FC3F54C01D8DA0C200FD433A /* white_square.png */,
@@ -1980,6 +1989,7 @@
 			files = (
 				FC58CF051D8DA6D30087DBA7 /* controls_moveslider-hd.png in Resources */,
 				FC58CF041D8DA6D30087DBA7 /* controls_look.png in Resources */,
+				FC2117C81D8ED40C008446EF /* Blip 008.wav in Resources */,
 				FC58CF641D8DA7160087DBA7 /* text_moveleft.png in Resources */,
 				FC58CF5D1D8DA7160087DBA7 /* text_jump-hd.png in Resources */,
 				FC58CEB11D8DA30B0087DBA7 /* Images.xcassets in Resources */,
@@ -2058,12 +2068,14 @@
 				FC58CEDF1D8DA6BD0087DBA7 /* asteroid2_1.png in Resources */,
 				FC58CF3B1D8DA70B0087DBA7 /* resettodefault.png in Resources */,
 				FC3F522B1D8DA0C000FD433A /* iTunesArtwork in Resources */,
+				FC2117C61D8ED3BB008446EF /* Kick 002.wav in Resources */,
 				FC3F53E91D8DA0C100FD433A /* LICENSE_CCBReader.txt in Resources */,
 				FC6B37D01D8E4FF4002D672D /* GoogleService-Info.plist in Resources */,
 				FC58CF661D8DA7160087DBA7 /* text_moveright.png in Resources */,
 				FC58CF0D1D8DA6D30087DBA7 /* controls_space-hd.png in Resources */,
 				FC3F522D1D8DA0C000FD433A /* iTunesArtwork@2x in Resources */,
 				FC58CF091D8DA6D30087DBA7 /* controls_rotate-hd.png in Resources */,
+				FC2117C41D8ED349008446EF /* Blip 019.wav in Resources */,
 				FC58CF8C1D8DA72B0087DBA7 /* vrHhelpcontrols.png in Resources */,
 				FC58CF3A1D8DA70B0087DBA7 /* resettodefault-hd.png in Resources */,
 				FC58CF901D8DA72B0087DBA7 /* vrHUDbgwhite.png in Resources */,
