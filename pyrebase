@@ -1,0 +1,14 @@
+import pyrebase
+
+config = {
+  "apiKey": "V73Dt8zTwjtPcp7BEYD8BpRx2XzuQvqKMAMlGpyI",
+  "authDomain": "hackmit-bc42a.firebaseapp.com",
+  "databaseURL": "https://hackmit-bc42a.firebaseio.com/",
+  "storageBucket": "hackmit-bc42a.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
+
+db = firebase.database()
+db.child("rpm").update({"rpm": 12})
+db.child("angle").update({"angle": 34})
