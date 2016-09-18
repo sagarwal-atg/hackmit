@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		FC38A0141D8E599000C112C5 /* finishflag.png in Resources */ = {isa = PBXBuildFile; fileRef = FC38A0121D8E599000C112C5 /* finishflag.png */; };
 		FC38A0151D8E599000C112C5 /* redwarning.png in Resources */ = {isa = PBXBuildFile; fileRef = FC38A0131D8E599000C112C5 /* redwarning.png */; };
+		FC3B8AF31D8E690500E476A3 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AEE1D8E690500E476A3 /* FirebaseAnalytics.framework */; };
+		FC3B8AF41D8E690500E476A3 /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AEF1D8E690500E476A3 /* FirebaseInstanceID.framework */; };
+		FC3B8AF51D8E690500E476A3 /* GoogleInterchangeUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AF01D8E690500E476A3 /* GoogleInterchangeUtilities.framework */; };
+		FC3B8AF61D8E690500E476A3 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AF11D8E690500E476A3 /* GoogleSymbolUtilities.framework */; };
+		FC3B8AF71D8E690500E476A3 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AF21D8E690500E476A3 /* GoogleUtilities.framework */; };
+		FC3B8AF91D8E692000E476A3 /* FirebaseDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AF81D8E692000E476A3 /* FirebaseDatabase.framework */; };
+		FC3B8AFC1D8E692E00E476A3 /* FirebaseStorage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AFA1D8E692E00E476A3 /* FirebaseStorage.framework */; };
+		FC3B8AFD1D8E692E00E476A3 /* GoogleNetworkingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AFB1D8E692E00E476A3 /* GoogleNetworkingUtilities.framework */; };
 		FC3F522B1D8DA0C000FD433A /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = FC3F522A1D8DA0C000FD433A /* iTunesArtwork */; };
 		FC3F522D1D8DA0C000FD433A /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = FC3F522C1D8DA0C000FD433A /* iTunesArtwork@2x */; };
 		FC3F52301D8DA0C000FD433A /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3F522F1D8DA0C000FD433A /* libObjectiveChipmunk.a */; };
@@ -309,6 +317,15 @@
 /* Begin PBXFileReference section */
 		FC38A0121D8E599000C112C5 /* finishflag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finishflag.png; sourceTree = "<group>"; };
 		FC38A0131D8E599000C112C5 /* redwarning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redwarning.png; sourceTree = "<group>"; };
+		FC3B8AEE1D8E690500E476A3 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		FC3B8AEF1D8E690500E476A3 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		FC3B8AF01D8E690500E476A3 /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleInterchangeUtilities.framework; sourceTree = "<group>"; };
+		FC3B8AF11D8E690500E476A3 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		FC3B8AF21D8E690500E476A3 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
+		FC3B8AF81D8E692000E476A3 /* FirebaseDatabase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseDatabase.framework; sourceTree = "<group>"; };
+		FC3B8AFA1D8E692E00E476A3 /* FirebaseStorage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseStorage.framework; sourceTree = "<group>"; };
+		FC3B8AFB1D8E692E00E476A3 /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleNetworkingUtilities.framework; sourceTree = "<group>"; };
+		FC3B8AFE1D8E698D00E476A3 /* Firebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Firebase.h; sourceTree = "<group>"; };
 		FC3F51FF1D8DA0C000FD433A /* hackProject1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hackProject1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC3F52031D8DA0C000FD433A /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC3F52291D8DA0C000FD433A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
@@ -886,6 +903,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC3B8AF91D8E692000E476A3 /* FirebaseDatabase.framework in Frameworks */,
+				FC3B8AFD1D8E692E00E476A3 /* GoogleNetworkingUtilities.framework in Frameworks */,
+				FC3B8AF71D8E690500E476A3 /* GoogleUtilities.framework in Frameworks */,
+				FC3B8AF31D8E690500E476A3 /* FirebaseAnalytics.framework in Frameworks */,
+				FC3B8AFC1D8E692E00E476A3 /* FirebaseStorage.framework in Frameworks */,
+				FC3B8AF51D8E690500E476A3 /* GoogleInterchangeUtilities.framework in Frameworks */,
+				FC3B8AF61D8E690500E476A3 /* GoogleSymbolUtilities.framework in Frameworks */,
+				FC3B8AF41D8E690500E476A3 /* FirebaseInstanceID.framework in Frameworks */,
 				FC3F52301D8DA0C000FD433A /* libObjectiveChipmunk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1042,7 +1067,16 @@
 		FC3F522E1D8DA0C000FD433A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC3B8AFE1D8E698D00E476A3 /* Firebase.h */,
 				FC3F522F1D8DA0C000FD433A /* libObjectiveChipmunk.a */,
+				FC3B8AFA1D8E692E00E476A3 /* FirebaseStorage.framework */,
+				FC3B8AFB1D8E692E00E476A3 /* GoogleNetworkingUtilities.framework */,
+				FC3B8AF81D8E692000E476A3 /* FirebaseDatabase.framework */,
+				FC3B8AEE1D8E690500E476A3 /* FirebaseAnalytics.framework */,
+				FC3B8AEF1D8E690500E476A3 /* FirebaseInstanceID.framework */,
+				FC3B8AF01D8E690500E476A3 /* GoogleInterchangeUtilities.framework */,
+				FC3B8AF11D8E690500E476A3 /* GoogleSymbolUtilities.framework */,
+				FC3B8AF21D8E690500E476A3 /* GoogleUtilities.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2313,6 +2347,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/hackProject1",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "hackProject1/Supporting Files/Prefix.pch";
@@ -2330,6 +2368,7 @@
 					"-lz",
 					"-ObjC",
 					"-lz",
+					"-ObjC",
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.MagMHJ.hackProject1;
@@ -2350,6 +2389,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/hackProject1",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "hackProject1/Supporting Files/Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2366,6 +2409,7 @@
 					"-lz",
 					"-ObjC",
 					"-lz",
+					"-ObjC",
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.MagMHJ.hackProject1;

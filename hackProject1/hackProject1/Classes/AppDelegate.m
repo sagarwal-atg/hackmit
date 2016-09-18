@@ -3,6 +3,7 @@
 #import "HelloWorldLayer.h"
 #import "HelloWorldLayer2.h"
 #import "OALAudioSession.h"
+#import "Firebase.h"
 
 // -----------------------------------------------------------------------
 
@@ -99,6 +100,9 @@
     [session setAllowIpod:YES];
     [session setUseHardwareIfAvailable:NO];
     [session setHonorSilentSwitch:YES];
+    
+    // Use Firebase library to configure APIs
+    [FIRApp configure];
     
     // Stay positive. Always return a YES :)
     return YES;
