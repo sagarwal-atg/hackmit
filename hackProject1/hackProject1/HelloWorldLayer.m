@@ -296,7 +296,7 @@
         }
         
         //environment
-        playerIDHWL = 1;
+        playerIDHWL = 0;
         if (playerIDHWL == 0) {
             for (int int1 = 0; int1 <= 0; int1++) {
                 NSString *objectName = @"pool1";

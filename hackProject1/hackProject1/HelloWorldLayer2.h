@@ -64,6 +64,9 @@
     
     float P2aimAngle;
     int P2shootTimer;
+    int MainGameTimer;
+    bool gameState; //0=playing, 1=game done
+    int playerCollisionExpirationSafety;
     
     int playerID; //distinguished between biker & shooter
     

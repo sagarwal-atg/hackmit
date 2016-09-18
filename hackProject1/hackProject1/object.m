@@ -1114,3 +1114,60 @@
 }
 
 @end
+
+@implementation rock7
+
++ (id)rockFinishFlag {
+    object *object = nil;
+    if ((object = [[super alloc] initWithImageNamed:@"finishflag.png"])) {
+        object.refreshminypos = 1;
+        object.objectScaleX = 0.25;
+        object.objectScaleY = object.objectScaleX;
+        object.actual2DZorder = 0;
+        object.objectid = 54;
+        
+        object.objectScaleXOffset = 1.0;
+        object.objectScaleYOffset = 1.0;
+        object.customOpacity = 1.0;
+        
+        object.standardScale = 1.0;
+        object.standardHeight = (240*(object.objectScaleY));
+        object.playerusable = 0;
+        object.objectusesgravity = 0;
+        object.objectusescollisions = 0;
+        object.minyposition = object.standardHeight/2;
+        object.mininitialyposition = object.minyposition;
+        object.dontVaryPerspective = 1;
+        object.objectstackable = 0;
+    }
+    return object;
+}
+
+@end
+
+@implementation vr8
+
++ (id)vrElement8 {
+    object *object = nil;
+    if ((object = [[super alloc] initWithImageNamed:@"redwarning.png"])) {
+        object.actual2DZorder = 0;
+        object.objectid = 16;
+        
+        //vr UI element posisioning
+        object.pospreXoffset = 0;
+        object.pospreYoffset = 0;
+        
+        //physical random properties
+        object.objectScaleX = 5.0;
+        object.objectScaleY = object.objectScaleX;
+        object.objectScaleXOffset = 1.0;
+        object.objectScaleYOffset = 1.0;
+        object.customOpacity = 0.5;
+        
+        object.vrUIelement = 1;
+        object.actual2DZorder = -50; //< -50 places vr UI object above all other objects
+    }
+    return object;
+}
+
+@end

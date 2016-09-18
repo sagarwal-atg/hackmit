@@ -51,7 +51,7 @@
     positionZ = 0;
     
     //player offsets
-    playerID = 1;
+    playerID = 0;
     if (playerID == 0) {
         positionZ = 0;
         positionY = minYpos;
@@ -309,6 +309,24 @@
                 [self addChild:horizNum2];
                 [objectTransitionArray addObject:horizNum2];
             }
+        } else {
+            for (int int2 = 0; int2 <= 0; int2++) {
+                label *horizNum2 = nil;
+                horizNum2 = [timer1 timerLabel1];
+                horizNum2.opacity = 0;
+                [self addChild:horizNum2];
+                [labelArray addObject:horizNum2];
+            }
+        }
+        
+        for (int int2 = 0; int2 <= 0; int2++) {
+            object *objectNum1 = nil;
+            objectNum1 = [rock7 rockFinishFlag];
+            objectNum1.posX = 0;
+            objectNum1.posY = 10.0;
+            objectNum1.posZ = 1400.0;
+            [self addChild:objectNum1];
+            [objectTransitionArray addObject:objectNum1];
         }
     }
 }
@@ -1078,9 +1096,84 @@
         quickLoadQueued--;
     }
     
+    if (playerCollisionExpirationSafety > 0) {
+        playerCollisionExpirationSafety--;
+    }
+    
     //shooting gun
     if (P2shootTimer > 0) {
         P2shootTimer--;
+    }
+    
+    //timer
+    if (gameState == 0) {
+        MainGameTimer++;
+    }
+    
+    //player collisions
+    if (playerID == 0 && playerCollisionExpirationSafety <= 0) {
+        for (int count1 = 1; count1 <= [objectsIDsOLD count]; count1++) {
+            int IDcheck = (int)[[objectsIDsOLD objectAtIndex:count1-1] intValue];
+            float posXCheck = [[objectsPosXOLD objectAtIndex:count1-1] floatValue];
+            float posYCheck = [[objectsPosYOLD objectAtIndex:count1-1] floatValue];
+            float posZCheck = [[objectsPosZOLD objectAtIndex:count1-1] floatValue];
+            float heightCheck = [[objectsHeightsOLD objectAtIndex:count1-1] floatValue];
+            float heightOffsetCheck = [[objectsHeightOffsetOLD objectAtIndex:count1-1] floatValue];
+            float radiusCheck = [[objectsRadiusOLD objectAtIndex:count1-1] floatValue];
+            int collisionTypeCheck = (int)[[objectsCollisionTypeOLD objectAtIndex:count1-1] intValue];
+            float hypo = sqrtf(powf(positionX-posXCheck,2.0)+powf(positionZ-posZCheck,2.0));
+            
+            if (hypo < 130.0 && collisionTypeCheck != 54) { //asteroid collision
+                for (CCSprite *sprite in objectArray) {
+                    object *otherObject = (object *)sprite;
+                    if (otherObject.uniqueobjectid == IDcheck) {
+                        otherObject.deleteObject = 3;
+                    }
+                }
+                
+                playerCollisionExpirationSafety = 4;
+                MainGameTimer = MainGameTimer + 900;
+                
+                for (int int21 = 0; int21 <= 0; int21++) {
+                    object *horizNum2 = nil;
+                    horizNum2 = [vr8 vrElement8];
+                    horizNum2.opacity = 0;
+                    [self addChild:horizNum2];
+                    [objectTransitionArray addObject:horizNum2];
+                }
+                
+                //particles
+                for (int int2 = 0; int2 < 13; int2++) {
+                    
+                    int randXMom = [self randomNumberFish] * 41;
+                    int randYMom = [self randomNumberFish] * 41;
+                    int randZMom = [self randomNumberFish] * 41;
+                    
+                    object *objectNum1 = nil;
+                    objectNum1 = [expl1 explParticle1];
+                    objectNum1.posX = posXCheck;
+                    objectNum1.posY = posYCheck;
+                    objectNum1.posZ = posZCheck;
+                    objectNum1.posXmomentum = ((float)randXMom-20.0)*0.03;
+                    objectNum1.posYmomentum = ((float)randYMom-20.0)*0.03;
+                    objectNum1.posZmomentum = ((float)randZMom-20.0)*0.03;
+                    
+                    float randColorThing = [self randomNumberFish];
+                    if (randColorThing < 0.5) {
+                        objectNum1.polygonColorRed = 146.0;
+                        objectNum1.polygonColorGreen = 117.0;
+                        objectNum1.polygonColorBlue = 83.0;
+                    } else {
+                        objectNum1.polygonColorRed = 102.0;
+                        objectNum1.polygonColorGreen = 102.0;
+                        objectNum1.polygonColorBlue = 102.0;
+                    }
+                    
+                    [self addChild:objectNum1];
+                    [objectTransitionArray addObject:objectNum1];
+                }
+            }
+        }
     }
     
     //vr menu management
@@ -1105,7 +1198,7 @@
         }
         for (CCLabelTTF *sprite in labelArray) {
             label *currentLabel = (label *)sprite;
-            if (currentLabel.vrLabel != 0) {
+            if (currentLabel.vrLabel == 1) {
                 currentLabel.deleteLabel = 1;
             }
         }
@@ -1908,7 +2001,7 @@
                     
                     float hypo = sqrtf(powf(currentObject.posX-posXCheck,2.0)+powf(currentObject.posZ-posZCheck,2.0));
                     
-                    if (hypo <= 50.0) { //radius overlap
+                    if (hypo <= 49.0 && collisionTypeCheck != 54) { //radius overlap
                         currentObject.deleteObject = 3;
                         for (CCSprite *sprite in objectArray) {
                             object *otherObject = (object *)sprite;
@@ -2027,6 +2120,19 @@
                 }
             }
             
+            //finish flag
+            if (currentObject.objectid == 54) {
+                [objectsIDs addObject:[NSNumber numberWithInt:currentObject.uniqueobjectid]];
+                [objectsPosX addObject:[NSNumber numberWithFloat:currentObject.posX+currentObject.posXmomentum]];
+                [objectsPosY addObject:[NSNumber numberWithFloat:currentObject.posY+currentObject.posYmomentum]];
+                [objectsPosZ addObject:[NSNumber numberWithFloat:currentObject.posZ+currentObject.posZmomentum]];
+                [objectsHeights addObject:[NSNumber numberWithFloat:currentObject.standardHeight]];
+                [objectsHeightOffset addObject:[NSNumber numberWithFloat:currentObject.collisionyoffset]];
+                [objectsRadius addObject:[NSNumber numberWithFloat:currentObject.objecttoobjectradius]];
+                [objectsCollisionType addObject:[NSNumber numberWithInt:currentObject.objectid]];
+                [objectsGrabbed addObject:[NSNumber numberWithInt:currentObject.objectgrabbed]];
+            }
+            
             //asteroids
             if (currentObject.objectid == 40 || currentObject.objectid == 41 || currentObject.objectid == 48 || currentObject.objectid == 49) {
                 numOfAsteroids++;
@@ -2056,7 +2162,7 @@
                 [objectsHeights addObject:[NSNumber numberWithFloat:currentObject.standardHeight]];
                 [objectsHeightOffset addObject:[NSNumber numberWithFloat:currentObject.collisionyoffset]];
                 [objectsRadius addObject:[NSNumber numberWithFloat:currentObject.objecttoobjectradius]];
-                [objectsCollisionType addObject:[NSNumber numberWithInt:currentObject.objectusescollisions]];
+                [objectsCollisionType addObject:[NSNumber numberWithInt:currentObject.objectid]];
                 [objectsGrabbed addObject:[NSNumber numberWithInt:currentObject.objectgrabbed]];
             }
             
@@ -4304,7 +4410,14 @@
              }
              }*/
         } else { //vr elements
-            if (currentObject.objectid == 17) { //scenery
+            if (currentObject.objectid == 16) { //warning thing
+                currentObject.opacity = currentObject.customOpacity;
+                
+                currentObject.customOpacity = currentObject.customOpacity+((0.0-currentObject.customOpacity)/40.0);
+                if (currentObject.customOpacity < 0.02) {
+                    [objectRemovalArray addObject:currentObject];
+                }
+            } else if (currentObject.objectid == 17) { //scenery
                 currentObject.opacity = currentObject.customOpacity;
                 currentObject.rotation = FOVrotation-gyroPitchOffset;
                 
@@ -4480,38 +4593,61 @@
     for (CCLabelTTF *sprite in labelArray) {
         label *currentLabel = (label *)sprite;
         
-        if (currentVRmenu == 0) {
-            currentLabel.labelopacity = currentLabel.labelopacity+((0.0-currentLabel.labelopacity)/4.0);
-            if (currentLabel.labelopacity < 0.02) {
-                [labelRemovalArray addObject:currentLabel];
-            }
-            currentLabel.opacity = currentLabel.labelopacity;
-        } else {
-            if (currentLabel.deleteLabel == 0) {
-                if (currentLabel.labelid == 0) {
-                    if (currentLabel.labelposY+vrCSscrollY < 100 && currentLabel.labelposY+vrCSscrollY > -185) {
-                        currentLabel.labelopacity = currentLabel.labelopacity+((1.0-currentLabel.labelopacity)/4.0);
-                    } else {
-                        currentLabel.labelopacity = currentLabel.labelopacity+((0.0-currentLabel.labelopacity)/4.0);
-                    }
-                }
-                
-                if (vrCSItemSelected == currentLabel.labelsubid && currentLabel.labelid == 0) { //selected
-                    currentLabel.opacity = (currentLabel.labelopacity*sinf(vrCSSelectionAnimX)*0.4)+0.6;
-                } else { //not selected
-                    currentLabel.opacity = currentLabel.labelopacity;
-                }
-            } else {
+        if (currentLabel.labelid == 0) {
+            if (currentVRmenu == 0) {
                 currentLabel.labelopacity = currentLabel.labelopacity+((0.0-currentLabel.labelopacity)/4.0);
                 if (currentLabel.labelopacity < 0.02) {
                     [labelRemovalArray addObject:currentLabel];
                 }
                 currentLabel.opacity = currentLabel.labelopacity;
+            } else {
+                if (currentLabel.deleteLabel == 0) {
+                    if (currentLabel.labelid == 0) {
+                        if (currentLabel.labelposY+vrCSscrollY < 100 && currentLabel.labelposY+vrCSscrollY > -185) {
+                            currentLabel.labelopacity = currentLabel.labelopacity+((1.0-currentLabel.labelopacity)/4.0);
+                        } else {
+                            currentLabel.labelopacity = currentLabel.labelopacity+((0.0-currentLabel.labelopacity)/4.0);
+                        }
+                    }
+                    
+                    if (vrCSItemSelected == currentLabel.labelsubid && currentLabel.labelid == 0) { //selected
+                        currentLabel.opacity = (currentLabel.labelopacity*sinf(vrCSSelectionAnimX)*0.4)+0.6;
+                    } else { //not selected
+                        currentLabel.opacity = currentLabel.labelopacity;
+                    }
+                } else {
+                    currentLabel.labelopacity = currentLabel.labelopacity+((0.0-currentLabel.labelopacity)/4.0);
+                    if (currentLabel.labelopacity < 0.02) {
+                        [labelRemovalArray addObject:currentLabel];
+                    }
+                    currentLabel.opacity = currentLabel.labelopacity;
+                }
+            }
+        } else if (currentLabel.labelid == 1) { //timer label
+            currentLabel.opacity = 1.0;
+            
+            int seconds = (MainGameTimer/60)%60;
+            int minutes = MainGameTimer/3600;
+            
+            if (minutes <= 9) {
+                if (seconds <= 9) {
+                    [currentLabel setString:[NSString stringWithFormat:@"0%i:0%i",minutes,seconds]];
+                } else {
+                    [currentLabel setString:[NSString stringWithFormat:@"0%i:%i",minutes,seconds]];
+                }
+            } else {
+                if (seconds <= 9) {
+                    [currentLabel setString:[NSString stringWithFormat:@"%i:0%i",minutes,seconds]];
+                } else {
+                    [currentLabel setString:[NSString stringWithFormat:@"%i:%i",minutes,seconds]];
+                }
             }
         }
         
         if (currentLabel.labelid == 0) {
             currentLabel.position = ccp(((winSize.width/2.0)+currentLabel.labelposX)-VReyeDistance*4.7,((winSize.height/2.0) + vrGlobalYOffset + currentLabel.labelposY+vrCSscrollY));
+        } else if (currentLabel.labelid == 1) {
+            currentLabel.position = ccp(((winSize.width/2.0)+currentLabel.labelposX)-VReyeDistance*4.7,((winSize.height/2.0) + vrGlobalYOffset + currentLabel.labelposY));
         }
         currentLabel.scaleX = isiPhone6PlusCoeff*0.5;
         currentLabel.scaleY = isiPhone6PlusCoeff*0.5;

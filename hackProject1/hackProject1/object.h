@@ -451,3 +451,13 @@
 }
 +(id)explParticle1;
 @end
+
+@interface rock7 : object {
+}
++(id)rockFinishFlag;
+@end
+
+@interface vr8 : object {
+}
++(id)vrElement8;
+@end

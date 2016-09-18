@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC38A0141D8E599000C112C5 /* finishflag.png in Resources */ = {isa = PBXBuildFile; fileRef = FC38A0121D8E599000C112C5 /* finishflag.png */; };
+		FC38A0151D8E599000C112C5 /* redwarning.png in Resources */ = {isa = PBXBuildFile; fileRef = FC38A0131D8E599000C112C5 /* redwarning.png */; };
 		FC3F522B1D8DA0C000FD433A /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = FC3F522A1D8DA0C000FD433A /* iTunesArtwork */; };
 		FC3F522D1D8DA0C000FD433A /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = FC3F522C1D8DA0C000FD433A /* iTunesArtwork@2x */; };
 		FC3F52301D8DA0C000FD433A /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3F522F1D8DA0C000FD433A /* libObjectiveChipmunk.a */; };
@@ -305,6 +307,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FC38A0121D8E599000C112C5 /* finishflag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finishflag.png; sourceTree = "<group>"; };
+		FC38A0131D8E599000C112C5 /* redwarning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redwarning.png; sourceTree = "<group>"; };
 		FC3F51FF1D8DA0C000FD433A /* hackProject1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hackProject1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC3F52031D8DA0C000FD433A /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC3F52291D8DA0C000FD433A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
@@ -1029,6 +1033,8 @@
 				FCACC8B71D8DEFDA009C45DA /* wheel1.png */,
 				FCACC8B91D8DFB1A009C45DA /* gunpart1.png */,
 				FCBBE0431D8E217B005E5313 /* whitecircle.png */,
+				FC38A0121D8E599000C112C5 /* finishflag.png */,
+				FC38A0131D8E599000C112C5 /* redwarning.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1947,6 +1953,7 @@
 				FC58CEDE1D8DA6BD0087DBA7 /* asteroid1_2.png in Resources */,
 				FC58CF111D8DA6D30087DBA7 /* controls_wsad-hd.png in Resources */,
 				FC58CF5F1D8DA7160087DBA7 /* text_movebackward-hd.png in Resources */,
+				FC38A0141D8E599000C112C5 /* finishflag.png in Resources */,
 				FC58CF911D8DA72B0087DBA7 /* vrTurnOffVR-hd.png in Resources */,
 				FC58CF5A1D8DA7160087DBA7 /* text_closeopen.png in Resources */,
 				FC58CF3F1D8DA70B0087DBA7 /* slider.png in Resources */,
@@ -2044,6 +2051,7 @@
 				FC58CF121D8DA6D30087DBA7 /* controls_wsad.png in Resources */,
 				FC58CF7E1D8DA71E0087DBA7 /* title_instr2.png in Resources */,
 				FC58CF061D8DA6D30087DBA7 /* controls_moveslider.png in Resources */,
+				FC38A0151D8E599000C112C5 /* redwarning.png in Resources */,
 				FC58CF191D8DA6D30087DBA7 /* eyeguard-hd.png in Resources */,
 				FC58CF631D8DA7160087DBA7 /* text_moveleft-hd.png in Resources */,
 			);

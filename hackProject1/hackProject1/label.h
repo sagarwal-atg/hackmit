@@ -28,3 +28,8 @@
 }
 +(id)keyChar1;
 @end
+
+@interface timer1 : label {
+}
++(id)timerLabel1;
+@end
