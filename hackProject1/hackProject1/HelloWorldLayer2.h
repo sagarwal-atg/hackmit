@@ -72,6 +72,10 @@
     bool startedListeners;
     int numOfFiredProjectiles;
     int nextProjNeedsIDOfAtLeast;
+    float bikeRotationOffset;
+    float bikeRotationPreOffset;
+    float bikeRPMs;
+    float bikeRPMstoUse;
     
     int playerID; //distinguished between biker & shooter
     

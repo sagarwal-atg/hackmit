@@ -461,3 +461,8 @@
 }
 +(id)vrElement8;
 @end
+
+@interface vr9 : object {
+}
++(id)vrElement9;
+@end

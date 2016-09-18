@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC2117C21D8E9D36008446EF /* congrats.png in Resources */ = {isa = PBXBuildFile; fileRef = FC2117C11D8E9D36008446EF /* congrats.png */; };
 		FC38A0141D8E599000C112C5 /* finishflag.png in Resources */ = {isa = PBXBuildFile; fileRef = FC38A0121D8E599000C112C5 /* finishflag.png */; };
 		FC38A0151D8E599000C112C5 /* redwarning.png in Resources */ = {isa = PBXBuildFile; fileRef = FC38A0131D8E599000C112C5 /* redwarning.png */; };
 		FC3B8AF31D8E690500E476A3 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3B8AEE1D8E690500E476A3 /* FirebaseAnalytics.framework */; };
@@ -315,6 +316,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FC2117C11D8E9D36008446EF /* congrats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = congrats.png; sourceTree = "<group>"; };
 		FC38A0121D8E599000C112C5 /* finishflag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finishflag.png; sourceTree = "<group>"; };
 		FC38A0131D8E599000C112C5 /* redwarning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redwarning.png; sourceTree = "<group>"; };
 		FC3B8AEE1D8E690500E476A3 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FirebaseAnalytics.framework; sourceTree = "<group>"; };
@@ -1060,6 +1062,7 @@
 				FCBBE0431D8E217B005E5313 /* whitecircle.png */,
 				FC38A0121D8E599000C112C5 /* finishflag.png */,
 				FC38A0131D8E599000C112C5 /* redwarning.png */,
+				FC2117C11D8E9D36008446EF /* congrats.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2083,6 +2086,7 @@
 				FC58CF681D8DA7160087DBA7 /* text_pickupdrop.png in Resources */,
 				FC58CF7D1D8DA71E0087DBA7 /* title_instr2-hd.png in Resources */,
 				FC58CF121D8DA6D30087DBA7 /* controls_wsad.png in Resources */,
+				FC2117C21D8E9D36008446EF /* congrats.png in Resources */,
 				FC58CF7E1D8DA71E0087DBA7 /* title_instr2.png in Resources */,
 				FC58CF061D8DA6D30087DBA7 /* controls_moveslider.png in Resources */,
 				FC38A0151D8E599000C112C5 /* redwarning.png in Resources */,
