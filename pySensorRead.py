@@ -7,10 +7,18 @@ import pyrebase
 #GLOBAL VARIABLES
 angle = 0
 rpm = 0
+prevRPM = rpm
+prevAngle = angle
 port_to_use = ''
 
 #FIREBASE SETUP
-
+config = {
+  "apiKey": "muOCqVoInSt9XOIoT5tHoDzHfxbLJwosXbfaldHU",
+  "authDomain": "hackmitproject-78bca.firebaseapp.com",
+  "databaseURL": "https://hackmitproject-78bca.firebaseio.com/",
+  "storageBucket": "hackmitproject-78bca.appspot.com"
+}
+firebase = pyrebase.initialize_app(config)
 # ADD YOUR FIREBASE SETUP HERE
 
 #sensorValStorage = firebase('https://hackmitproject-78bca.firebaseio.com/sensor')
@@ -49,13 +57,13 @@ print "Setup serial."
 
 #result_angle = firebase.post('/rpm', data={"angle":angle, "rpm":rpm} , params={'print': 'pretty'})
 
-
+db = firebase.database()
 counter = 0
 while True:
 	counter += 1
 	#parse the line, storing it to global variables
 	parseSerial(ser.readline())
-	
+
 	#prevent the values from being exaclty zero
 	if rpm==0.0 or rpm==0:
 		rpm=0.01
@@ -65,11 +73,17 @@ while True:
 	print angle, rpm
 
 	#upload stuff to firebase
-	if counter > 10:
+	# if counter > 10 or angle != prevAngle:
+	# 	prevAngle = angle
+	# 	counter = 0
+	# 	db.child("rpm").update({"rpm": rpm})
+	# 	db.child("angle").update({"angle": angle})
+
+	if counter > 20 or (abs(rpm-prevRPM)>8):
+		prevRPM = rpm
 		counter = 0
-		
-		#ADD YOUR CODE HERE
+		db.child("rpm").update({"rpm": rpm})
+		db.child("angle").update({"angle": angle})
+
 
 ser.close()
-    
-
