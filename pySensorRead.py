@@ -2,6 +2,7 @@
 import serial
 import serial.tools.list_ports
 from firebase import firebase
+import pyrebase
 
 #GLOBAL VARIABLES
 angle = 0
@@ -9,8 +10,10 @@ rpm = 0
 port_to_use = ''
 
 #FIREBASE SETUP
-firebase = firebase.FirebaseApplication('https://hackmitproject-78bca.firebaseio.com/sensor.json', None)
-new_user = 'Ozgur Vatansever'
+
+# ADD YOUR FIREBASE SETUP HERE
+
+#sensorValStorage = firebase('https://hackmitproject-78bca.firebaseio.com/sensor')
 
 
 def parseSerial(line):
@@ -44,16 +47,29 @@ print ""
 ser = serial.Serial(port_to_use, 9600)
 print "Setup serial."
 
+#result_angle = firebase.post('/rpm', data={"angle":angle, "rpm":rpm} , params={'print': 'pretty'})
+
+
 counter = 0
 while True:
 	counter += 1
 	#parse the line, storing it to global variables
 	parseSerial(ser.readline())
+	
+	#prevent the values from being exaclty zero
+	if rpm==0.0 or rpm==0:
+		rpm=0.01
+	if angle==0.0 or angle==0:
+		angle==0.01
+
 	print angle, rpm
 
 	#upload stuff to firebase
 	if counter > 10:
 		counter = 0
-		result_angle = firebase.post('/sensor', data={"angle":angle, "rpm":rpm} , params={'print': 'pretty'})
+		
+		#ADD YOUR CODE HERE
+
+ser.close()
     
 
