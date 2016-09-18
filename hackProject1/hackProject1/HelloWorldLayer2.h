@@ -3,6 +3,7 @@
 #import "cocos2d-ui.h"
 #include <CoreMotion/CoreMotion.h>
 #import <CoreFoundation/CoreFoundation.h>
+#import "Firebase.h"
 
 @interface HelloWorldLayer2 : CCScene {
     NSMutableArray *objectArray;
@@ -67,6 +68,10 @@
     int MainGameTimer;
     bool gameState; //0=playing, 1=game done
     int playerCollisionExpirationSafety;
+    FIRDatabaseReference *refHWL;
+    bool startedListeners;
+    int numOfFiredProjectiles;
+    int nextProjNeedsIDOfAtLeast;
     
     int playerID; //distinguished between biker & shooter
     

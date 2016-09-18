@@ -51,7 +51,7 @@
     positionZ = 0;
     
     //player offsets
-    playerID = 0;
+    playerID = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"playerID"];
     if (playerID == 0) {
         positionZ = 0;
         positionY = minYpos;
@@ -170,6 +170,7 @@
             objectNum1.posZ = [[objectComponents objectAtIndex:2] floatValue];
             objectNum1.randomflipped = [[objectComponents objectAtIndex:3] boolValue];
             objectNum1.polygonColorRed = [[objectComponents objectAtIndex:6] floatValue];
+            objectNum1.objecttag = [[objectComponents objectAtIndex:7] intValue];
             
             float scaleCoeff = [[objectComponents objectAtIndex:5] floatValue];
             objectNum1.standardScale = 0.4+(scaleCoeff*1.4);
@@ -693,6 +694,11 @@
                     
                     [self addChild:objectNum1];
                     [objectTransitionArray addObject:objectNum1];
+                    
+                    numOfFiredProjectiles++;
+                    
+                    //add missile to database queue
+                    [[[refHWL child:@"projectilesToAdd"] child:[NSString stringWithFormat:@"%i",numOfFiredProjectiles]] setValue:@{@"posX": [NSNumber numberWithFloat:objectNum1.posX],@"posZ": [NSNumber numberWithFloat:objectNum1.posZ],@"posY": [NSNumber numberWithFloat:objectNum1.posY],@"posXmomentum": [NSNumber numberWithFloat:objectNum1.posXmomentum],@"posYmomentum": [NSNumber numberWithFloat:objectNum1.posYmomentum],@"posZmomentum": [NSNumber numberWithFloat:objectNum1.posZmomentum],@"colorRed": [NSNumber numberWithFloat:objectNum1.polygonColorRed],@"colorGreen": [NSNumber numberWithFloat:objectNum1.polygonColorGreen],@"colorBlue": [NSNumber numberWithFloat:objectNum1.polygonColorBlue],@"projNumber": [NSNumber numberWithInt:numOfFiredProjectiles]}];
                 }
                 P2shootTimer = 100;
             }
@@ -1094,6 +1100,52 @@
         
     } else if (quickLoadQueued > 1) {
         quickLoadQueued--;
+    }
+    
+    //syncing position
+    if (playerID == 0) {
+        if (vrPrimaryInstance == 1) {
+            [[refHWL child:@"positionX"] setValue:[NSNumber numberWithFloat:positionX]];
+            [[refHWL child:@"positionZ"] setValue:[NSNumber numberWithFloat:positionZ]];
+        }
+        
+        [[refHWL child:@"projectilesToAdd"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+            NSArray *postDict = snapshot.value;
+            if (postDict != nil && postDict != NULL && (id)postDict != [NSNull null]) {
+                for (int index = 1; index <= postDict.count-1; index++) {
+                    if ([[postDict[index] valueForKey:@"projNumber"] intValue] >= nextProjNeedsIDOfAtLeast) {
+                        for (int int2 = 0; int2 <= 0; int2++) {
+                            object *objectNum1 = nil;
+                            objectNum1 = [gun2 gunMissile];
+                            objectNum1.posY = [[postDict[index] valueForKey:@"posY"] floatValue];
+                            objectNum1.posX = [[postDict[index] valueForKey:@"posX"] floatValue];
+                            objectNum1.posZ = [[postDict[index] valueForKey:@"posZ"] floatValue];
+                            objectNum1.posXmomentum = [[postDict[index] valueForKey:@"posXmomentum"] floatValue];
+                            objectNum1.posZmomentum = [[postDict[index] valueForKey:@"posZmomentum"] floatValue];
+                            objectNum1.polygonColorRed = [[postDict[index] valueForKey:@"colorRed"] floatValue];
+                            objectNum1.polygonColorGreen = [[postDict[index] valueForKey:@"colorGreen"] floatValue];
+                            objectNum1.polygonColorBlue = [[postDict[index] valueForKey:@"colorBlue"] floatValue];
+                            
+                            nextProjNeedsIDOfAtLeast = [[postDict[index] valueForKey:@"projNumber"] intValue]+1;
+                            
+                            [self addChild:objectNum1];
+                            [objectTransitionArray addObject:objectNum1];
+                        }
+                    }
+                }
+            }
+        }];
+    } else {
+        if (startedListeners == 0) {
+            startedListeners = 1;
+            
+            [[refHWL child:@"positionX"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                positionX = [snapshot.value floatValue];
+            }];
+            [[refHWL child:@"positionZ"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                positionZ = [snapshot.value floatValue];
+            }];
+        }
     }
     
     if (playerCollisionExpirationSafety > 0) {
@@ -1979,8 +2031,6 @@
         if (currentObject.objectid == 52) {
             currentObject.posX = currentObject.posX + currentObject.posXmomentum;
             currentObject.posZ = currentObject.posZ + currentObject.posZmomentum;
-            
-            printf("%.1f, %.1f\n",currentObject.posXmomentum,currentObject.posZmomentum);
             
             if (currentObject.hypotenusetoplayer > 3000) {
                 currentObject.deleteObject = 1;
@@ -4822,6 +4872,8 @@
         polygonArray = [[NSMutableArray alloc]init ];
         statItemArray = [[NSMutableArray alloc]init ];
         labelArray = [[NSMutableArray alloc]init ];
+        
+        refHWL = [[FIRDatabase database] reference];
         
         //sets up initial pre-loaded "random" numbers
         randNumberArray = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithFloat:0.537541569], [NSNumber numberWithFloat:0.132723042], [NSNumber numberWithFloat:0.618744764], [NSNumber numberWithFloat:0.293344437], [NSNumber numberWithFloat:0.893346023], [NSNumber numberWithFloat:0.396128913], [NSNumber numberWithFloat:0.917114072], [NSNumber numberWithFloat:0.247347853], [NSNumber numberWithFloat:0.232414962], [NSNumber numberWithFloat:0.830266141], [NSNumber numberWithFloat:0.303195859], [NSNumber numberWithFloat:0.018316813], [NSNumber numberWithFloat:0.976459222], [NSNumber numberWithFloat:0.237741013], [NSNumber numberWithFloat:0.032342849], [NSNumber numberWithFloat:0.780015984], [NSNumber numberWithFloat:0.531399063], [NSNumber numberWithFloat:0.529829887], [NSNumber numberWithFloat:0.185832289], [NSNumber numberWithFloat:0.975409450], [NSNumber numberWithFloat:0.405397441], [NSNumber numberWithFloat:0.190646781], [NSNumber numberWithFloat:0.015215383], [NSNumber numberWithFloat:0.220051274], [NSNumber numberWithFloat:0.827903551], nil];
