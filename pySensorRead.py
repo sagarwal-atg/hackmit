@@ -8,6 +8,10 @@ angle = 0
 rpm = 0
 port_to_use = ''
 
+#FIREBASE SETUP
+firebase = firebase.FirebaseApplication('https://hackmitproject-78bca.firebaseio.com/sensor.json', None)
+new_user = 'Ozgur Vatansever'
+
 
 def parseSerial(line):
 	global angle, rpm
@@ -18,8 +22,9 @@ def parseSerial(line):
 	try:
 		angle = float(vals[0])
 		rpm = float(vals[1])
+		return True
 	except:
-		pass
+		return False
 
 #print out the available ports for debugging purposes
 ports = [i.device for i in list(serial.tools.list_ports.comports())]
@@ -32,22 +37,23 @@ for i in  ports:
 	print i
 	if 'usbmodem' in i:
 		port_to_use = i
+		print "Using port:", port_to_use
 print ""
 
 #create the serial device, and open the port
 ser = serial.Serial(port_to_use, 9600)
+print "Setup serial."
 
+counter = 0
 while True:
+	counter += 1
 	#parse the line, storing it to global variables
 	parseSerial(ser.readline())
 	print angle, rpm
 
-
-
-#uploading stuff to firebase!!!!
-firebase = firebase.FirebaseApplication('https://hackmitproject-78bca.firebaseio.com/sensor.json', None)
-new_user = 'Ozgur Vatansever'
-
-while True:
-    result_angle = firebase.post('/sensor', data={"angle":angle, "rpm":rpm} , params={'print': 'pretty'})
+	#upload stuff to firebase
+	if counter > 10:
+		counter = 0
+		result_angle = firebase.post('/sensor', data={"angle":angle, "rpm":rpm} , params={'print': 'pretty'})
+    
 
