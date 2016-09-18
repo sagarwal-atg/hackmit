@@ -4,6 +4,7 @@ int redIndicatorPin = 2;
 int greenIndicatorPin = 1;
 
 
+
 //POTENTIOMETER STUFF
 int potPin = A0;    // select the input pin for the potentiometer
 int ledPin = 13;   // select the pin for the LED
@@ -29,6 +30,7 @@ int hallEffectPin = 0;
 
 void setup() {
   pinMode(ledPin, OUTPUT);  // declare the led pins as OUTPUT
+
   pinMode(redIndicatorPin, OUTPUT);
   pinMode(greenIndicatorPin, OUTPUT);
 
@@ -43,6 +45,7 @@ void setup() {
 }
 
 void loop() {
+<<<<<<< HEAD
 
   //GET VALUE FROM THE POTENTIOMETER
   potRead = analogRead(potPin);  // read the value from the sensor
