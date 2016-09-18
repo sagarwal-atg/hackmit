@@ -23,8 +23,8 @@
 // Set these to run example.
 #define FIREBASE_HOST "hackmit-bc42a.firebaseio.com"
 #define FIREBASE_AUTH "V73Dt8zTwjtPcp7BEYD8BpRx2XzuQvqKMAMlGpyI"
-#define WIFI_SSID "LenhartFamily"
-#define WIFI_PASSWORD "correcthorsebatterystaple"
+#define WIFI_SSID "MIT GUEST"
+#define WIFI_PASSWORD ""
 
 void setup() {
   Serial.begin(9600);
@@ -71,7 +71,7 @@ void loop() {
   Serial.println(Firebase.getFloat("number"));
   delay(1000);
 
-  // remove valuemm
+  // remove value
   Firebase.remove("number");
   delay(1000);
 
