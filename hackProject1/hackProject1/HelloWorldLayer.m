@@ -3,24 +3,9 @@
 #import "HelloWorldLayer2.h"
 #import "CCCropNode.h"
 #import "MenuLayer.h"
+#import "Firebase.h"
 
 @implementation HelloWorldLayer
-
-- (void)moveOnToNextLevel {
-    printf("MOVE ON TO NEXT LEVEL\n");
-    
-    [self generateNewLevel];
-    
-    if (vrModeOn == 1) {
-        HelloWorldLayer2 * hwLayer2 = (HelloWorldLayer2 *)[self getChildByName:@"hwLayer2" recursively:1];
-        HelloWorldLayer2 * hwLayer3 = (HelloWorldLayer2 *)[self getChildByName:@"hwLayer3" recursively:1];
-        [hwLayer2 resetWorldAndReload];
-        [hwLayer3 resetWorldAndReload];
-    } else {
-        HelloWorldLayer2 * hwLayer2 = (HelloWorldLayer2 *)[self getChildByName:@"hwLayer2" recursively:1];
-        [hwLayer2 resetWorldAndReload];
-    }
-}
 
 - (void)generateNewLevel {
     //picking level
@@ -262,42 +247,57 @@
             objectName0 = nil;
         }
         
-        //initial asteroids
-        for (int int1 = 0; int1 <= 9; int1++) {
-            for (int int2 = 0; int2 <= 11; int2++) {
-                
-                int createAsteroid = arc4random() % 3;
-                
-                if (createAsteroid == 1) {
-                    NSString *objectName = @"rock3";
-                    int randName = arc4random() % 4;
-                    if (randName == 1) {
-                        objectName = @"rock4";
-                    } else if (randName == 2) {
-                        objectName = @"rock5";
-                    } else if (randName == 3) {
-                        objectName = @"rock6";
+        //environment
+        playerIDHWL = 1;
+        [[NSUserDefaults standardUserDefaults] setInteger:playerIDHWL forKey:@"playerID"];
+        if (playerIDHWL == 0) {
+            
+            //clears database
+            [[ref child:@"asteroids"] removeValue];
+            
+            //initial asteroids
+            int asteroidID = 0;
+            int numAsts = 0;
+            for (int int1 = 0; int1 <= 9; int1++) {
+                for (int int2 = 0; int2 <= 11; int2++) {
+                    
+                    int createAsteroid = arc4random() % 3;
+                    
+                    if (createAsteroid == 1) {
+                        numAsts++;
+                        NSString *objectName = @"rock3";
+                        int randName = arc4random() % 4;
+                        if (randName == 1) {
+                            objectName = @"rock4";
+                        } else if (randName == 2) {
+                            objectName = @"rock5";
+                        } else if (randName == 3) {
+                            objectName = @"rock6";
+                        }
+                        
+                        float randnum1 = ((float)int1-4.0)*85.0;
+                        float randnum2 = ((float)int2+1.0)*250.0;
+                        
+                        int randnum4 = (arc4random() % 2001) - 1000;
+                        int randnum5 = (arc4random() % 21);
+                        int randnum6 = (arc4random() % 51) - 25;
+                        
+                        asteroidID++;
+                        
+                        bool randnum3 = arc4random() % 2;
+                        NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithFloat:randnum1], [NSNumber numberWithFloat:randnum2], [NSNumber numberWithBool:randnum3], [NSNumber numberWithFloat:(float)randnum4/50.0], [NSNumber numberWithFloat:(float)randnum5/20.0], [NSNumber numberWithFloat:((float)randnum6/15.0)*0.42], [NSNumber numberWithInt:asteroidID], nil];
+                        [generatedObjects addObject:object1Attributes];
+                        objectName = nil;
+                        object1Attributes = nil;
+                        
+                        //writes initial map to database
+                        [[[ref child:@"asteroids"] child:[NSString stringWithFormat:@"%i",asteroidID]] setValue:@{@"posX": [NSNumber numberWithInt:randnum1] ,@"posZ": [NSNumber numberWithInt:randnum2]}];
                     }
-                    
-                    float randnum1 = ((float)int1-4.0)*85.0;
-                    float randnum2 = ((float)int2+1.0)*250.0;
-                    
-                    int randnum4 = (arc4random() % 2001) - 1000;
-                    int randnum5 = (arc4random() % 21);
-                    int randnum6 = (arc4random() % 51) - 25;
-                    
-                    bool randnum3 = arc4random() % 2;
-                    NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithFloat:randnum1], [NSNumber numberWithFloat:randnum2], [NSNumber numberWithBool:randnum3], [NSNumber numberWithFloat:(float)randnum4/50.0], [NSNumber numberWithFloat:(float)randnum5/20.0], [NSNumber numberWithFloat:((float)randnum6/15.0)*0.42], nil];
-                    [generatedObjects addObject:object1Attributes];
-                    objectName = nil;
-                    object1Attributes = nil;
                 }
             }
-        }
-        
-        //environment
-        playerIDHWL = 0;
-        if (playerIDHWL == 0) {
+            
+            [[ref child:@"numOfAsteroids"] setValue:[NSNumber numberWithInt:numAsts]];
+            
             for (int int1 = 0; int1 <= 0; int1++) {
                 NSString *objectName = @"pool1";
                 
@@ -343,33 +343,75 @@
                 
                 objectName = nil;
             }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:generatedObjects forKey:@"generatedObjects"];
+            generatedObjects = nil;
+            heatmapwradius = nil;
+            
+            printf("DONE GENERATING\n");
+            
+            [self initGame];
         } else {
-            for (int int1 = 0; int1 <= 0; int1++) {
-                NSString *objectName = @"pool3";
+            
+            //pulls asteroid data from firebase
+            
+            [[ref child:@"asteroids"] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                NSArray *postDict = snapshot.value;
                 
-                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:-45], nil];
-                [generatedObjects addObject:object1Attributes];
-                object1Attributes = nil;
+                for (int index = 1; index <= postDict.count-1; index++) {
+                    NSString *objectName = @"rock3";
+                    int randName = arc4random() % 4;
+                    if (randName == 1) {
+                        objectName = @"rock4";
+                    } else if (randName == 2) {
+                        objectName = @"rock5";
+                    } else if (randName == 3) {
+                        objectName = @"rock6";
+                    }
+                    
+                    float randnum1 = [[postDict[index] valueForKey:@"posX"] floatValue];
+                    float randnum2 = [[postDict[index] valueForKey:@"posZ"] floatValue];
+                    
+                    int randnum4 = (arc4random() % 2001) - 1000;
+                    int randnum5 = (arc4random() % 21);
+                    int randnum6 = (arc4random() % 51) - 25;
+                    
+                    bool randnum3 = arc4random() % 2;
+                    NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithFloat:randnum1], [NSNumber numberWithFloat:randnum2], [NSNumber numberWithBool:randnum3], [NSNumber numberWithFloat:(float)randnum4/50.0], [NSNumber numberWithFloat:(float)randnum5/20.0], [NSNumber numberWithFloat:((float)randnum6/15.0)*0.42], [NSNumber numberWithInt:index], nil];
+                    [generatedObjects addObject:object1Attributes];
+                    objectName = nil;
+                    object1Attributes = nil;
+                }
                 
-                objectName = nil;
-            }
-            for (int int1 = 0; int1 <= 0; int1++) {
-                NSString *objectName = @"wheel1";
+                for (int int1 = 0; int1 <= 0; int1++) {
+                    NSString *objectName = @"pool3";
+                    
+                    NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:-45], nil];
+                    [generatedObjects addObject:object1Attributes];
+                    object1Attributes = nil;
+                    
+                    objectName = nil;
+                }
+                for (int int1 = 0; int1 <= 0; int1++) {
+                    NSString *objectName = @"wheel1";
+                    
+                    NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:0], [NSNumber numberWithInt:35], [NSNumber numberWithBool:(arc4random() % 2)], [NSNumber numberWithInt:-23], nil];
+                    [generatedObjects addObject:object1Attributes];
+                    object1Attributes = nil;
+                    
+                    objectName = nil;
+                }
                 
-                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:0], [NSNumber numberWithInt:35], [NSNumber numberWithBool:(arc4random() % 2)], [NSNumber numberWithInt:-23], nil];
-                [generatedObjects addObject:object1Attributes];
-                object1Attributes = nil;
+                [[NSUserDefaults standardUserDefaults] setObject:generatedObjects forKey:@"generatedObjects"];
                 
-                objectName = nil;
-            }
+                printf("DONE GENERATING\n");
+                
+                [self initGame];
+            } withCancelBlock:^(NSError * _Nonnull error) {
+                NSLog(@"%@", error.localizedDescription);
+            }];
         }
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:generatedObjects forKey:@"generatedObjects"];
-    generatedObjects = nil;
-    heatmapwradius = nil;
-    
-    printf("DONE GENERATING\n");
 }
 
 - (void)createObjectInOtherInstance:(NSMutableArray *)objectParams {
@@ -619,6 +661,8 @@
         currentTouchesX = [[NSMutableArray alloc]init ];
         currentTouchesY = [[NSMutableArray alloc]init ];
         
+        ref = [[FIRDatabase database] reference];
+        
         //vr mode off/on
         vrModeOn = 1;
         vrModeOnRefresh = -1;
@@ -659,7 +703,6 @@
         }
         
         [self generateNewLevel];
-        [self initGame];
         
         [self schedule:@selector(act) interval:1.0/60.0];
 	}
