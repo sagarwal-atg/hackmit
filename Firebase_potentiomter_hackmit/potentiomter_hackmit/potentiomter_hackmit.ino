@@ -42,6 +42,10 @@ void setup() {
 }
 
 */
+//INDICATOR LEDs
+int redIndicatorPin = 2;
+int greenIndicatorPin = 1;
+
 
 //POTENTIOMETER STUFF
 int potPin = A0;    // select the input pin for the potentiometer
@@ -67,7 +71,10 @@ int hallEffectPin = 0;
 
 
 void setup() {
-  pinMode(ledPin, OUTPUT);  // declare the ledPin as an OUTPUT
+  pinMode(ledPin, OUTPUT);  // declare the led pins as OUTPUT
+  pinMode(redIndicatorPin, OUTPUT); 
+  pinMode(greenIndicatorPin, OUTPUT);
+  
   Serial.begin(9600);      // open the serial port at 115200 bps:    
 
   //Initialize the intterrupt pin (Arduino digital pin 2)
@@ -79,7 +86,7 @@ void setup() {
 }
 
 void loop() {
-
+  
   //GET VALUE FROM THE POTENTIOMETER
   potRead = analogRead(potPin);  // read the value from the sensor
   if (potRead >= potCenterRead)  // normalizing the potentiometer value to get the angle 
@@ -100,6 +107,22 @@ void loop() {
      timeold = millis();
      halfRevs = 0;
      }
+
+  //INDICATORS
+
+  //if the bike is not moving, turn off green
+  if (rpm == 0) {
+    digitalWrite(greenIndicatorPin, LOW);
+  } else {
+    digitalWrite(greenIndicatorPin, HIGH);
+  }
+
+  //if the handlebars are centered, light up the red indicator
+  if (abs(angle) <= 1) {
+    digitalWrite(redIndicatorPin, HIGH);
+  } else {
+    digitalWrite(redIndicatorPin, LOW);
+  }
      
 
   //DEBUGGING AREA
