@@ -11,6 +11,9 @@
  * http://arduino.berlios.de
  *
  */
+
+
+/*
 #include <ESP8266WiFi.h>
 #include <FirebaseArduino.h>
 
@@ -19,6 +22,7 @@
 #define FIREBASE_AUTH "V73Dt8zTwjtPcp7BEYD8BpRx2XzuQvqKMAMlGpyI"
 #define WIFI_SSID "LenhartFamily"
 #define WIFI_PASSWORD "correcthorsebatterystaple"
+
 
 void setup() {
   Serial.begin(9600);
@@ -37,42 +41,39 @@ void setup() {
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
 }
 
-int potPin = 2;    // select the input pin for the potentiometer
+*/
+
+int potPin = A0;    // select the input pin for the potentiometer
 int ledPin = 13;   // select the pin for the LED
-double val = 0;       // variable to store the value coming from the sensor
+double potRead = 0;       // variable to store the value coming from the sensor
 double angle = 0;
+double potCenterRead = 591;
+
 
 void setup() {
   pinMode(ledPin, OUTPUT);  // declare the ledPin as an OUTPUT
-  Serial.begin(9600);      // open the serial port at 9600 bps:    
+  Serial.begin(9600);      // open the serial port at 115200 bps:    
 }
 
 void loop() {
-  val = analogRead(potPin);    // read the value from the sensor
-  Serial.print("Potentiomter value: ");
-  Serial.print(val);
-  Serial.print("\n");
+  potRead = analogRead(potPin);  // read the value from the sensor
   
-  if( val >= 512)              // normalizing the potentiometer value to get the angle 
-     {  val = val - 512 ; 
-        angle = val/511; 
-        angle = angle * 90 ;
-        Serial.print("angle: ");
-        Serial.print(angle);     
-      }
+  if (potRead >= potCenterRead)  // normalizing the potentiometer value to get the angle 
+     {  potRead = potRead - potCenterRead ; 
+        angle = potRead/511; 
+        angle = angle * 810; //extra factor of 9 to deal with weird non-linearity of potentiometer
+     }
   else 
     {
-       val = 512 - val; 
-       angle = val/512;
-       angle = - angle;
-       angle = angle * 90; 
-       Serial.print("angle: ");
-       Serial.print(angle);      
+       potRead = potCenterRead - potRead; 
+       angle = potRead/511;
+       angle = -angle * 110;     
     }
+   Serial.print("angle: ");
+   Serial.print(angle);
+   Serial.println();
+    
   digitalWrite(ledPin, HIGH);  // turn the ledPin on
-  delay(1000);                  // stop the program for some time
-
+  delay(10);              // stop the program for some time
   digitalWrite(ledPin, LOW);   // turn the ledPin off
-  delay(1000);                  // stop the program for some time
-  Serial.print("\n");
 }
