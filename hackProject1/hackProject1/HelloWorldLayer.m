@@ -248,18 +248,22 @@
         }
         
         //environment
-        playerIDHWL = 1;
+        //FLAG - IMPORTANT BOOLEAN HERE
+        playerIDHWL = 0;
         [[NSUserDefaults standardUserDefaults] setInteger:playerIDHWL forKey:@"playerID"];
         if (playerIDHWL == 0) {
             
             //clears database
             [[ref child:@"asteroids"] removeValue];
+            [[ref child:@"projectilesToAdd"] removeValue];
+            [[[ref child:@"angle"] child:@"angle"] setValue:[NSNumber numberWithFloat:0.0]];
+            [[[ref child:@"rpm"] child:@"rpm"] setValue:[NSNumber numberWithFloat:0.0]];
             
             //initial asteroids
             int asteroidID = 0;
             int numAsts = 0;
-            for (int int1 = 0; int1 <= 9; int1++) {
-                for (int int2 = 0; int2 <= 11; int2++) {
+            for (int int1 = 0; int1 <= 11; int1++) {
+                for (int int2 = 0; int2 <= 13; int2++) {
                     
                     int createAsteroid = arc4random() % 3;
                     
@@ -275,8 +279,8 @@
                             objectName = @"rock6";
                         }
                         
-                        float randnum1 = ((float)int1-4.0)*85.0;
-                        float randnum2 = ((float)int2+1.0)*250.0;
+                        float randnum1 = ((float)int1-5.0)*88.0;
+                        float randnum2 = ((float)int2+1.2)*250.0;
                         
                         int randnum4 = (arc4random() % 2001) - 1000;
                         int randnum5 = (arc4random() % 21);
@@ -297,6 +301,7 @@
             }
             
             [[ref child:@"numOfAsteroids"] setValue:[NSNumber numberWithInt:numAsts]];
+            [[ref child:@"gameState"] setValue:[NSNumber numberWithInt:0]];
             
             for (int int1 = 0; int1 <= 0; int1++) {
                 NSString *objectName = @"pool1";
@@ -352,6 +357,8 @@
             
             [self initGame];
         } else {
+            
+            [[ref child:@"projectilesToAdd"] removeValue];
             
             //pulls asteroid data from firebase
             
@@ -473,8 +480,12 @@
         [self setMultipleTouchEnabled:1];
     } else if (vrModeOn == 1) {
         
-        //adds textfield interactivity
-        [(AppDelegate *)[[UIApplication sharedApplication] delegate] addVRComponents];
+        if (playerIDHWL != 0) {
+            //adds textfield interactivity
+            [(AppDelegate *)[[UIApplication sharedApplication] delegate] addVRComponents];
+        } else {
+            [(AppDelegate *)[[UIApplication sharedApplication] delegate] removeVRComponents];
+        }
         
         [self setUserInteractionEnabled:0];
         [self setMultipleTouchEnabled:0];

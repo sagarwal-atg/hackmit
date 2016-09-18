@@ -12,6 +12,17 @@
 @implementation HelloWorldLayer2
 @synthesize motionManager;
 
+- (void)endGame {
+    printf("END GAME\n");
+    for (int int21 = 0; int21 <= 0; int21++) {
+        object *horizNum2 = nil;
+        horizNum2 = [vr9 vrElement9];
+        horizNum2.opacity = 0;
+        [self addChild:horizNum2];
+        [objectTransitionArray addObject:horizNum2];
+    }
+}
+
 - (void)resetWorldAndReload {
     printf("RESET WORLD & RELOAD: %i\n",vrPrimaryInstance);
     
@@ -56,7 +67,7 @@
         positionZ = 0;
         positionY = minYpos;
     } else {
-        positionY = 55;
+        positionY = 60;
         positionZ = 0;
     }
     
@@ -325,7 +336,7 @@
             objectNum1 = [rock7 rockFinishFlag];
             objectNum1.posX = 0;
             objectNum1.posY = 10.0;
-            objectNum1.posZ = 1400.0;
+            objectNum1.posZ = 2600.0;
             [self addChild:objectNum1];
             [objectTransitionArray addObject:objectNum1];
         }
@@ -1108,33 +1119,49 @@
             [[refHWL child:@"positionX"] setValue:[NSNumber numberWithFloat:positionX]];
             [[refHWL child:@"positionZ"] setValue:[NSNumber numberWithFloat:positionZ]];
         }
-        
-        [[refHWL child:@"projectilesToAdd"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
-            NSArray *postDict = snapshot.value;
-            if (postDict != nil && postDict != NULL && (id)postDict != [NSNull null]) {
-                for (int index = 1; index <= postDict.count-1; index++) {
-                    if ([[postDict[index] valueForKey:@"projNumber"] intValue] >= nextProjNeedsIDOfAtLeast) {
-                        for (int int2 = 0; int2 <= 0; int2++) {
-                            object *objectNum1 = nil;
-                            objectNum1 = [gun2 gunMissile];
-                            objectNum1.posY = [[postDict[index] valueForKey:@"posY"] floatValue];
-                            objectNum1.posX = [[postDict[index] valueForKey:@"posX"] floatValue];
-                            objectNum1.posZ = [[postDict[index] valueForKey:@"posZ"] floatValue];
-                            objectNum1.posXmomentum = [[postDict[index] valueForKey:@"posXmomentum"] floatValue];
-                            objectNum1.posZmomentum = [[postDict[index] valueForKey:@"posZmomentum"] floatValue];
-                            objectNum1.polygonColorRed = [[postDict[index] valueForKey:@"colorRed"] floatValue];
-                            objectNum1.polygonColorGreen = [[postDict[index] valueForKey:@"colorGreen"] floatValue];
-                            objectNum1.polygonColorBlue = [[postDict[index] valueForKey:@"colorBlue"] floatValue];
-                            
-                            nextProjNeedsIDOfAtLeast = [[postDict[index] valueForKey:@"projNumber"] intValue]+1;
-                            
-                            [self addChild:objectNum1];
-                            [objectTransitionArray addObject:objectNum1];
+        if (startedListeners == 0) {
+            startedListeners = 1;
+            
+            [[refHWL child:@"angle"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                if (snapshot != nil && snapshot.value != nil) {
+                    NSDictionary *postDict = snapshot.value;
+                    bikeRotationPreOffset = [postDict[@"angle"] floatValue]*0.045;
+                }
+            }];
+            [[refHWL child:@"rpm"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                if (snapshot != nil && snapshot.value != nil) {
+                    NSDictionary *postDict = snapshot.value;
+                    bikeRPMs = [postDict[@"rpm"] floatValue];
+                }
+            }];
+            
+            [[refHWL child:@"projectilesToAdd"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                NSArray *postDict = snapshot.value;
+                if (postDict != nil && postDict != NULL && (id)postDict != [NSNull null]) {
+                    for (int index = 1; index <= postDict.count-1; index++) {
+                        if ([[postDict[index] valueForKey:@"projNumber"] intValue] >= nextProjNeedsIDOfAtLeast) {
+                            for (int int2 = 0; int2 <= 0; int2++) {
+                                object *objectNum1 = nil;
+                                objectNum1 = [gun2 gunMissile];
+                                objectNum1.posY = [[postDict[index] valueForKey:@"posY"] floatValue]+6.0;
+                                objectNum1.posX = [[postDict[index] valueForKey:@"posX"] floatValue];
+                                objectNum1.posZ = [[postDict[index] valueForKey:@"posZ"] floatValue];
+                                objectNum1.posXmomentum = [[postDict[index] valueForKey:@"posXmomentum"] floatValue];
+                                objectNum1.posZmomentum = [[postDict[index] valueForKey:@"posZmomentum"] floatValue];
+                                objectNum1.polygonColorRed = [[postDict[index] valueForKey:@"colorRed"] floatValue];
+                                objectNum1.polygonColorGreen = [[postDict[index] valueForKey:@"colorGreen"] floatValue];
+                                objectNum1.polygonColorBlue = [[postDict[index] valueForKey:@"colorBlue"] floatValue];
+                                
+                                nextProjNeedsIDOfAtLeast = [[postDict[index] valueForKey:@"projNumber"] intValue]+1;
+                                
+                                [self addChild:objectNum1];
+                                [objectTransitionArray addObject:objectNum1];
+                            }
                         }
                     }
                 }
-            }
-        }];
+            }];
+        }
     } else {
         if (startedListeners == 0) {
             startedListeners = 1;
@@ -1144,6 +1171,12 @@
             }];
             [[refHWL child:@"positionZ"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
                 positionZ = [snapshot.value floatValue];
+            }];
+            [[refHWL child:@"gameState"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                gameState = [snapshot.value intValue];
+                if (gameState == 1) {
+                    [self endGame];
+                }
             }];
         }
     }
@@ -1224,6 +1257,18 @@
                     [self addChild:objectNum1];
                     [objectTransitionArray addObject:objectNum1];
                 }
+            } else if (hypo < 135.0 && collisionTypeCheck == 54 && gameState == 0) {
+                gameState = 1;
+                [[refHWL child:@"gameState"] setValue:[NSNumber numberWithInt:1]];
+                
+                for (CCSprite *sprite in objectArray) {
+                    object *otherObject = (object *)sprite;
+                    if (otherObject.uniqueobjectid == IDcheck) {
+                        otherObject.deleteObject = 3;
+                    }
+                }
+                
+                [self endGame];
             }
         }
     }
@@ -1264,7 +1309,7 @@
                     currentObject.deleteObject = 0;
                 }
             }
-        } else if (currentVRmenu != 0) {
+        } else if (currentVRmenu != 0 && playerID == 0) {
             if (currentVRmenu == -1) { //controls & settings
                 //creates ui elements
                 for (int int2 = 0; int2 <= 0; int2++) {
@@ -1446,7 +1491,7 @@
     
     //virtual reality eye placement
     if (vrEnabled == 1) {
-        float angleInRadians = (rotationX+(gyroYawOffset/16.5))*16.5*(3.1415926535897932/180.0);
+        float angleInRadians = (rotationX+bikeRotationOffset+(gyroYawOffset/16.5))*16.5*(3.1415926535897932/180.0);
         float angle2InRadians = (FOVrotation-gyroPitchOffset)*(3.1415926535897932/180.0);
         VRoffsetX = VReyeDistance*cosf(angleInRadians)*cosf(angle2InRadians);
         VRoffsetY = VReyeDistance*sinf(angle2InRadians);
@@ -1766,6 +1811,13 @@
         momentumZ2 = momentumZ2 * 0.9;
     }
     
+    //motion update
+    if (playerID == 0) {
+        bikeRotationOffset = bikeRotationOffset + ((bikeRotationPreOffset - bikeRotationOffset)/12.0);
+        bikeRPMstoUse = bikeRPMstoUse + ((bikeRPMs - bikeRPMstoUse)/9.0);
+        momentumZ = bikeRPMstoUse/120.0;
+    }
+    
     //in liquid animation
     if (playerInLiquid == 0) {
         if (onTopOfFloatingObjects == 0) {
@@ -1820,7 +1872,7 @@
     }
     
     
-    positionvar1 = CC_DEGREES_TO_RADIANS((rotationX+(gyroYawOffset/16.5)));
+    positionvar1 = CC_DEGREES_TO_RADIANS((rotationX+bikeRotationOffset+(gyroYawOffset/16.5)));
     if (momentumZ == 0) {
         positionvar2 = (positionvar1*16.5);
     } else {
@@ -2623,7 +2675,7 @@
             currentObject.preposZ = currentObject.posZ;
             
             //adjusts position according to rotationx
-            currentObject.calcZ2 = atan((currentObject.preposX - (positionX+VRoffsetX))/(currentObject.preposZ - (positionZ+VRoffsetZ))) + (CC_DEGREES_TO_RADIANS(rotationX+(gyroYawOffset/16.5))*16.5);
+            currentObject.calcZ2 = atan((currentObject.preposX - (positionX+VRoffsetX))/(currentObject.preposZ - (positionZ+VRoffsetZ))) + (CC_DEGREES_TO_RADIANS(rotationX+bikeRotationOffset+(gyroYawOffset/16.5))*16.5);
             if ((currentObject.preposZ - (positionZ+VRoffsetZ)) >= 0) {
                 currentObject.calcZ3 = sqrtf(powf((currentObject.preposX - (positionX+VRoffsetX)), 2) + powf((currentObject.preposZ - (positionZ+VRoffsetZ)), 2));
             } else {
@@ -2913,10 +2965,10 @@
                 }
                 if (currentObject.visible == YES) {
                     if (currentObject.dontVaryPerspective == 0 && currentObject.isinvisibleparentobject == 0) {
-                        currentObject.rotationoffsetx = -((rotationX+(gyroYawOffset/16.5)) * 16.5);
+                        currentObject.rotationoffsetx = -((rotationX+bikeRotationOffset+(gyroYawOffset/16.5)) * 16.5);
                         currentObject.calcZ1 = (asinf((currentObject.postposX - (positionX+VRoffsetX))/(currentObject.hypotenusetoplayer))*180/3.141592654)+currentObject.rotationoffsetx+(currentObject.rotationoffsetx2 * 57.2957779);
                         if (currentObject.objectid >= 33 && currentObject.objectid <= 37) {
-                            float fakeCalcZ2 = atan((currentObject.preposX - positionX)/(currentObject.preposZ - positionZ)) + (CC_DEGREES_TO_RADIANS(rotationX+(gyroYawOffset/16.5))*16.5);
+                            float fakeCalcZ2 = atan((currentObject.preposX - positionX)/(currentObject.preposZ - positionZ)) + (CC_DEGREES_TO_RADIANS(rotationX+bikeRotationOffset+(gyroYawOffset/16.5))*16.5);
                             float fakeCalcZ3 = 0;
                             if ((currentObject.preposZ - positionZ) >= 0) {
                                 fakeCalcZ3 = sqrtf(powf((currentObject.preposX - positionX), 2) + powf((currentObject.preposZ - positionZ), 2));
@@ -3888,7 +3940,7 @@
                         prePointZ = (sinf(var2)*currentObject.polygonRadius)+currentObject.posZ;
                         
                         float negativo = 0;
-                        float calcZ = atan((prePointX - (positionX+VRoffsetX))/(prePointZ - (positionZ+VRoffsetZ))) + (CC_DEGREES_TO_RADIANS((rotationX+(gyroYawOffset/16.5)))*16.5)+currentObject.rotationoffsetx2;
+                        float calcZ = atan((prePointX - (positionX+VRoffsetX))/(prePointZ - (positionZ+VRoffsetZ))) + (CC_DEGREES_TO_RADIANS((rotationX+bikeRotationOffset+(gyroYawOffset/16.5)))*16.5)+currentObject.rotationoffsetx2;
                         float calcZ_3 = 0;
                         if ((prePointZ - (positionZ+VRoffsetZ)) >= 0) {
                             calcZ_3 = sqrtf(powf((prePointX - (positionX+VRoffsetX)), 2) + powf((prePointZ - (positionZ+VRoffsetZ)), 2));
@@ -4083,7 +4135,7 @@
                         }
                         
                         float negativo = 0;
-                        float calcZ = atan((prePointX - (positionX+VRoffsetX))/(prePointZ - (positionZ+VRoffsetZ))) + (CC_DEGREES_TO_RADIANS((rotationX+(gyroYawOffset/16.5)))*16.5)+currentObject.rotationoffsetx2;
+                        float calcZ = atan((prePointX - (positionX+VRoffsetX))/(prePointZ - (positionZ+VRoffsetZ))) + (CC_DEGREES_TO_RADIANS((rotationX+bikeRotationOffset+(gyroYawOffset/16.5)))*16.5)+currentObject.rotationoffsetx2;
                         float calcZ_3 = 0;
                         if ((prePointZ - (positionZ+VRoffsetZ)) >= 0) {
                             calcZ_3 = sqrtf(powf((prePointX - (positionX+VRoffsetX)), 2) + powf((prePointZ - (positionZ+VRoffsetZ)), 2));
@@ -4311,7 +4363,7 @@
                         }
                         
                         float negativo = 0;
-                        float calcZ = atan((prePointX - (positionX+VRoffsetX))/(prePointZ - (positionZ+VRoffsetZ))) + (CC_DEGREES_TO_RADIANS((rotationX+(gyroYawOffset/16.5)))*16.5)+currentObject.rotationoffsetx2;
+                        float calcZ = atan((prePointX - (positionX+VRoffsetX))/(prePointZ - (positionZ+VRoffsetZ))) + (CC_DEGREES_TO_RADIANS((rotationX+bikeRotationOffset+(gyroYawOffset/16.5)))*16.5)+currentObject.rotationoffsetx2;
                         float calcZ_3 = 0;
                         if ((prePointZ - (positionZ+VRoffsetZ)) >= 0) {
                             calcZ_3 = sqrtf(powf((prePointX - (positionX+VRoffsetX)), 2) + powf((prePointZ - (positionZ+VRoffsetZ)), 2));
@@ -4460,7 +4512,9 @@
              }
              }*/
         } else { //vr elements
-            if (currentObject.objectid == 16) { //warning thing
+            if (currentObject.objectid == 15) { //congrats
+                currentObject.opacity = currentObject.customOpacity;
+            } else if (currentObject.objectid == 16) { //warning thing
                 currentObject.opacity = currentObject.customOpacity;
                 
                 currentObject.customOpacity = currentObject.customOpacity+((0.0-currentObject.customOpacity)/40.0);

@@ -238,10 +238,11 @@
 
 - (void)removeVRComponents {
     [tf resignFirstResponder];
+    tf = nil;
     /*if ([[[CCDirector sharedDirector] view] subviews].count-1 > 0) {
      [[[CCDirector sharedDirector] view] willRemoveSubview:[[[[CCDirector sharedDirector] view] subviews] objectAtIndex:[[[CCDirector sharedDirector] view] subviews].count-1]];
      }*/
-    //printf("REMOVE VR COMPONENTS\n");
+    printf("REMOVE VR COMPONENTS\n");
 }
 
 - (CCScene *)startScene

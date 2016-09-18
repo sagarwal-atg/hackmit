@@ -1171,3 +1171,30 @@
 }
 
 @end
+
+@implementation vr9
+
++ (id)vrElement9 {
+    object *object = nil;
+    if ((object = [[super alloc] initWithImageNamed:@"congrats.png"])) {
+        object.actual2DZorder = 0;
+        object.objectid = 15;
+        
+        //vr UI element posisioning
+        object.pospreXoffset = 0;
+        object.pospreYoffset = 0;
+        
+        //physical random properties
+        object.objectScaleX = 0.24;
+        object.objectScaleY = object.objectScaleX;
+        object.objectScaleXOffset = 1.0;
+        object.objectScaleYOffset = 1.0;
+        object.customOpacity = 1.0;
+        
+        object.vrUIelement = 1;
+        object.actual2DZorder = -50; //< -50 places vr UI object above all other objects
+    }
+    return object;
+}
+
+@end
