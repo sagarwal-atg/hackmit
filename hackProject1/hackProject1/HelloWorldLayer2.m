@@ -336,7 +336,7 @@
             objectNum1 = [rock7 rockFinishFlag];
             objectNum1.posX = 0;
             objectNum1.posY = 10.0;
-            objectNum1.posZ = 2600.0;
+            objectNum1.posZ = 3600.0;
             [self addChild:objectNum1];
             [objectTransitionArray addObject:objectNum1];
         }
@@ -705,6 +705,10 @@
                     
                     [self addChild:objectNum1];
                     [objectTransitionArray addObject:objectNum1];
+                    
+                    if (vrPrimaryInstance == 1) {
+                        [[OALSimpleAudio sharedInstance] playEffect:@"Blip 019.wav"];
+                    }
                     
                     numOfFiredProjectiles++;
                     
@@ -1119,13 +1123,14 @@
             [[refHWL child:@"positionX"] setValue:[NSNumber numberWithFloat:positionX]];
             [[refHWL child:@"positionZ"] setValue:[NSNumber numberWithFloat:positionZ]];
         }
+        
         if (startedListeners == 0) {
             startedListeners = 1;
             
             [[refHWL child:@"angle"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
                 if (snapshot != nil && snapshot.value != nil) {
                     NSDictionary *postDict = snapshot.value;
-                    bikeRotationPreOffset = [postDict[@"angle"] floatValue]*0.045;
+                    bikeRotationPreOffset = [postDict[@"angle"] floatValue]*0.03;
                 }
             }];
             [[refHWL child:@"rpm"] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
@@ -1143,7 +1148,7 @@
                             for (int int2 = 0; int2 <= 0; int2++) {
                                 object *objectNum1 = nil;
                                 objectNum1 = [gun2 gunMissile];
-                                objectNum1.posY = [[postDict[index] valueForKey:@"posY"] floatValue]+6.0;
+                                objectNum1.posY = [[postDict[index] valueForKey:@"posY"] floatValue]+41.0;
                                 objectNum1.posX = [[postDict[index] valueForKey:@"posX"] floatValue];
                                 objectNum1.posZ = [[postDict[index] valueForKey:@"posZ"] floatValue];
                                 objectNum1.posXmomentum = [[postDict[index] valueForKey:@"posXmomentum"] floatValue];
@@ -1219,6 +1224,10 @@
                 playerCollisionExpirationSafety = 4;
                 MainGameTimer = MainGameTimer + 900;
                 
+                if (vrPrimaryInstance == 1) {
+                    [[OALSimpleAudio sharedInstance] playEffect:@"Kick 002.wav"];
+                }
+                
                 for (int int21 = 0; int21 <= 0; int21++) {
                     object *horizNum2 = nil;
                     horizNum2 = [vr8 vrElement8];
@@ -1260,6 +1269,10 @@
             } else if (hypo < 135.0 && collisionTypeCheck == 54 && gameState == 0) {
                 gameState = 1;
                 [[refHWL child:@"gameState"] setValue:[NSNumber numberWithInt:1]];
+                
+                if (vrPrimaryInstance == 1) {
+                    [[OALSimpleAudio sharedInstance] playEffect:@"Blip 008.wav"];
+                }
                 
                 for (CCSprite *sprite in objectArray) {
                     object *otherObject = (object *)sprite;
@@ -1555,6 +1568,7 @@
     } else if (vrEnabled != 0 && gyroscopeControlsEnabled != 1) {
         gyroscopeControlsEnabled = 1;
     }
+    gyroscopeControlsEnabled = 1;
     if (gyroscopeControlsEnabled == 1) {
         CMDeviceMotion *currentDeviceMotion = motionManager.deviceMotion;
         CMAttitude *currentAttitude = currentDeviceMotion.attitude;
@@ -1562,6 +1576,8 @@
         float targetYaw = (float)(CC_RADIANS_TO_DEGREES(currentAttitude.yaw));
         float targetPitch = (float)(CC_RADIANS_TO_DEGREES(currentAttitude.pitch));
         float targetRoll = (float)(CC_RADIANS_TO_DEGREES(currentAttitude.roll));
+        
+        
         
         if (gyroQuadrantRefresh != gyroQuadrant) {
             gyroQuadrantRefresh = gyroQuadrant;
@@ -1773,9 +1789,6 @@
         }
     }
     if (tapRon == 0) {
-        if (momentumrotationX > 0 || momentumrotationX < 0) {
-            momentumrotationX = momentumrotationX * 0.9;
-        }
         if (momentumrotationY > 0 || momentumrotationY < 0) {
             if (rotationY <= 3.6 && rotationY >= -3.6) {
                 momentumrotationY = momentumrotationY * 0.9;
@@ -1813,9 +1826,10 @@
     
     //motion update
     if (playerID == 0) {
-        bikeRotationOffset = bikeRotationOffset + ((bikeRotationPreOffset - bikeRotationOffset)/12.0);
+        bikeRotationOffset = bikeRotationOffset + ((bikeRotationPreOffset - bikeRotationOffset)/10.0);
+        momentumrotationX = bikeRotationOffset*0.056;
         bikeRPMstoUse = bikeRPMstoUse + ((bikeRPMs - bikeRPMstoUse)/9.0);
-        momentumZ = bikeRPMstoUse/120.0;
+        momentumZ = bikeRPMstoUse/65.0;
     }
     
     //in liquid animation
@@ -2110,6 +2124,10 @@
                             if (otherObject.uniqueobjectid == IDcheck) {
                                 otherObject.deleteObject = 3;
                             }
+                        }
+                        
+                        if (vrPrimaryInstance == 1) {
+                            [[OALSimpleAudio sharedInstance] playEffect:@"Kick 002.wav"];
                         }
                         
                         //particles
@@ -3154,54 +3172,6 @@
                             }
                         }
                         
-                        //y momentum & gravity
-                        if (levelTypeHWL2 != 2) {
-                            if (currentObject.posY+(currentObject.posYmomentum-gravityBuffer1) > currentObject.minyposition && currentObject.objectgrabbed == 0 && currentObject.objectusesgravity == 1) {
-                                if (levelTypeHWL2 == 1) {
-                                    currentObject.posYmomentum = currentObject.posYmomentum-(0.15*0.4);
-                                } else {
-                                    currentObject.posYmomentum = currentObject.posYmomentum-0.15;
-                                }
-                            } else if (currentObject.posY+(currentObject.posYmomentum-gravityBuffer1) <= currentObject.minyposition && currentObject.objectgrabbed == 0 && currentObject.posYmomentum != 0 && currentObject.objectusesgravity == 1) {
-                                //printf("momentumy: %f\n",currentObject.posYmomentum);
-                                currentObject.posY = currentObject.minyposition;
-                                if (currentObject.posYmomentum < -gravityBuffer1) { //y bounce threshold
-                                    if (levelTypeHWL2 == 1) {
-                                        currentObject.posYmomentum = -currentObject.posYmomentum*0.65;
-                                    } else {
-                                        currentObject.posYmomentum = -currentObject.posYmomentum*0.75;
-                                    }
-                                } else { //eliminates bounce to avoid phasing through other objects
-                                    currentObject.posYmomentum = 0;
-                                }
-                                //printf(" - %f\n",currentObject.posYmomentum);
-                            } else if (currentObject.posY+gravityBuffer1 < currentObject.minyposition && currentObject.objectgrabbed == 0) {
-                                currentObject.posY = currentObject.minyposition;
-                                if (levelTypeHWL2 == 1) {
-                                    currentObject.posYmomentum = 2.7*0.35;
-                                } else {
-                                    currentObject.posYmomentum = 2.7;
-                                }
-                            }
-                            
-                            //x momentum
-                            if (currentObject.posXmomentum != 0) {
-                                if (currentObject.posY <= currentObject.minyposition) {
-                                    currentObject.posXmomentum = currentObject.posXmomentum * 0.9;
-                                } else {
-                                    currentObject.posXmomentum = currentObject.posXmomentum * 0.98;
-                                }
-                            }
-                            //z momentum
-                            if (currentObject.posZmomentum != 0) {
-                                if (currentObject.posY <= currentObject.minyposition) {
-                                    currentObject.posZmomentum = currentObject.posZmomentum * 0.9;
-                                } else {
-                                    currentObject.posZmomentum = currentObject.posZmomentum * 0.98;
-                                }
-                            }
-                        }
-                        
                         //applies momentum & gravity
                         if (currentObject.posYmomentum != 0) {
                             currentObject.posY = currentObject.posY + currentObject.posYmomentum;
@@ -3615,84 +3585,6 @@
                                 }
                             } else if (currentObject.hasbeenPickedUp == 0) {
                                 currentObject.hasbeenPickedUp = 1;
-                            }
-                        }
-                    }
-                    
-                    //y momentum & gravity
-                    if (levelTypeHWL2 != 2) {
-                        if (currentObject.posY+(currentObject.posYmomentum-gravityBuffer1) > currentObject.minyposition && currentObject.objectgrabbed == 0 && currentObject.objectusesgravity == 1) {
-                            if (levelTypeHWL2 == 1) {
-                                currentObject.posYmomentum = currentObject.posYmomentum-(0.19*0.4);
-                            } else {
-                                currentObject.posYmomentum = currentObject.posYmomentum-0.19;
-                            }
-                        } else if (currentObject.posY+(currentObject.posYmomentum-gravityBuffer1) <= currentObject.minyposition && currentObject.objectgrabbed == 0 && currentObject.posYmomentum != 0 && currentObject.objectusesgravity == 1) {
-                            //printf("momentumy: %f, %i, %i\n",currentObject.posYmomentum,currentObject.overLiquidBase,currentObject.overAnotherFloatingObject);
-                            currentObject.posY = currentObject.minyposition;
-                            if (currentObject.posYmomentum < -gravityBuffer1) { //y bounce threshold
-                                if (currentObject.overLiquidBase != 0 || currentObject.overAnotherFloatingObject != 0) {
-                                    currentObject.posYmomentum = 0;
-                                } else {
-                                    if (levelTypeHWL2 == 1) {
-                                        currentObject.posYmomentum = -currentObject.posYmomentum*0.28;
-                                    } else {
-                                        currentObject.posYmomentum = -currentObject.posYmomentum*0.34;
-                                    }
-                                    
-                                    //generic proximity-based landing sound
-                                    if (currentObject.hypotenusetoplayer <= 140 && vrPrimaryInstance == 1) {
-                                        //printf("%f\n",currentObject.posYmomentum);
-                                        if (currentObject.posYmomentum >= 1.5) {
-                                            [[OALSimpleAudio sharedInstance] playEffect:@"thud3_loud.wav"];
-                                        } else if (currentObject.posYmomentum < 1.5 && currentObject.posYmomentum > 0.4) {
-                                            [[OALSimpleAudio sharedInstance] playEffect:@"thud3_soft.wav"];
-                                        }
-                                    } else if (currentObject.hypotenusetoplayer <= 250) {
-                                        if (currentObject.posYmomentum >= 1.5) {
-                                            [[OALSimpleAudio sharedInstance] playEffect:@"thud3_soft.wav"];
-                                        }
-                                    }
-                                }
-                            } else { //eliminates bounce to avoid phasing through other objects
-                                currentObject.posYmomentum = 0;
-                            }
-                            //printf(" - %f\n",currentObject.posYmomentum);
-                        } else if (currentObject.posY+gravityBuffer1 < currentObject.minyposition && currentObject.objectgrabbed == 0) {
-                            currentObject.posY = currentObject.minyposition;
-                            if (currentObject.overLiquidBase == 0) {
-                                if (levelTypeHWL2 == 1) {
-                                    currentObject.posYmomentum = 2.7*0.35;
-                                } else {
-                                    currentObject.posYmomentum = 2.7;
-                                }
-                            } else {
-                                currentObject.posYmomentum = 4.8;
-                            }
-                        }
-                        
-                        //x momentum
-                        if (currentObject.posXmomentum != 0) {
-                            if (currentObject.posY <= currentObject.minyposition) {
-                                if (currentObject.overLiquidBase == 0) {
-                                    currentObject.posXmomentum = currentObject.posXmomentum * 0.86;
-                                } else {
-                                    currentObject.posXmomentum = currentObject.posXmomentum * (0.89+(0.085*currentObject.overLiquidViscosity));
-                                }
-                            } else {
-                                currentObject.posXmomentum = currentObject.posXmomentum * 0.98;
-                            }
-                        }
-                        //z momentum
-                        if (currentObject.posZmomentum != 0) {
-                            if (currentObject.posY <= currentObject.minyposition) {
-                                if (currentObject.overLiquidBase == 0) {
-                                    currentObject.posZmomentum = currentObject.posZmomentum * 0.86;
-                                } else {
-                                    currentObject.posZmomentum = currentObject.posZmomentum * (0.89+(0.085*currentObject.overLiquidViscosity));
-                                }
-                            } else {
-                                currentObject.posZmomentum = currentObject.posZmomentum * 0.98;
                             }
                         }
                     }

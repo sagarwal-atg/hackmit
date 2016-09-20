@@ -128,7 +128,7 @@
         id layer = [scene getChildByName:@"hwLayer2" recursively:YES];
         id layer2 = [scene getChildByName:@"hwLayer3" recursively:YES];
         
-        if ([currentchar isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveforward"]]) {
+        /*if ([currentchar isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveforward"]]) {
             [layer moveZposition:3.5];
             [layer2 moveZposition:3.5];
         } else if ([currentchar isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_movebackward"]]) {
@@ -167,7 +167,7 @@
           [layer lookStop];
           [layer2 lookDirection:0.0 :-160.0];
           [layer2 lookStop];
-          }
+          }*/
         
         //failsafe menu navigation controls
         [layer navigateMenu:currentchar];
