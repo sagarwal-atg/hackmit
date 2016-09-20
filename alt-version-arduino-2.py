@@ -71,20 +71,16 @@ while True:
 	if angle==0.0 or angle==0:
 		angle==0.01
 
-	#upload stuff to firebase
-	# if counter > 10 or angle != prevAngle:
-	# 	prevAngle = angle
-	# 	counter = 0
-	# 	db.child("rpm").update({"rpm": rpm})
-	# 	db.child("angle").update({"angle": angle})
-
-	if counter > 20 or (abs(rpm-prevRPM)>8):
-		#print "y"
-		print angle, rpm
+	if counter > 10 or (abs(rpm-prevRPM)>8):
+		print "R:", rpm
 		prevRPM = rpm
 		counter = 0
 		db.child("rpm").update({"rpm": rpm})
-		db.child("angle").update({"angle": angle})
+
+    if abs(angle-prevAngle)>2:
+        print "A:", angle
+        db.child("angle").update({"angle":angle})
+        prevAngle = angle
 
 
 ser.close()
