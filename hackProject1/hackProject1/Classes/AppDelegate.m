@@ -128,48 +128,6 @@
         id layer = [scene getChildByName:@"hwLayer2" recursively:YES];
         id layer2 = [scene getChildByName:@"hwLayer3" recursively:YES];
         
-        /*if ([currentchar isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveforward"]]) {
-            [layer moveZposition:3.5];
-            [layer2 moveZposition:3.5];
-        } else if ([currentchar isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_movebackward"]]) {
-            [layer moveZposition:-3.5];
-            [layer2 moveZposition:-3.5];
-        } else if ([currentchar isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveleft"]]) {
-            [layer moveXposition:-3.5];
-            [layer2 moveXposition:-3.5];
-        } else if ([currentchar isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveright"]]) {
-            [layer moveXposition:3.5];
-            [layer2 moveXposition:3.5];
-        } else if ([currentchar isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_closeopen"]] || [currentchar isEqualToString:@"h"] || [currentchar isEqualToString:@"H"]) {
-            [layer toggleVRmenuInterface:-1];
-            [layer2 toggleVRmenuInterface:-1];
-        }
-        
-        
-        //dev controls
-        if ([currentchar isEqualToString:@"j"] || [currentchar isEqualToString:@"J"]) {
-          [layer lookDirection:-120.0 :0.0];
-          [layer lookStop];
-          [layer2 lookDirection:-120.0 :0.0];
-          [layer2 lookStop];
-          } else if ([currentchar isEqualToString:@"l"] || [currentchar isEqualToString:@"L"]) {
-          [layer lookDirection:120.0 :0.0];
-          [layer lookStop];
-          [layer2 lookDirection:120.0 :0.0];
-          [layer2 lookStop];
-          } else if ([currentchar isEqualToString:@"i"] || [currentchar isEqualToString:@"I"]) {
-          [layer lookDirection:0.0 :160.0];
-          [layer lookStop];
-          [layer2 lookDirection:0.0 :160.0];
-          [layer2 lookStop];
-          } else if ([currentchar isEqualToString:@"k"] || [currentchar isEqualToString:@"K"]) {
-          [layer lookDirection:0.0 :-160.0];
-          [layer lookStop];
-          [layer2 lookDirection:0.0 :-160.0];
-          [layer2 lookStop];
-          }*/
-        
-        //failsafe menu navigation controls
         [layer navigateMenu:currentchar];
         [layer2 navigateMenu:currentchar];
     }
@@ -191,19 +149,11 @@
         id layer2 = [scene getChildByName:@"hwLayer3" recursively:YES];
         [layer bluetoothConnectivityChange:1];
         [layer2 bluetoothConnectivityChange:1];
-        
-        /*NSDictionary* userInfo = [notification userInfo];
-         CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-         [[[CCDirector sharedDirector] view] setBounds:CGRectMake(0,50,windowWidth,windowHeight/2.0)];
-         [[[CCDirector sharedDirector] view] setFrame:CGRectMake(0,50,windowWidth,windowHeight/2.0)];*/
     }
 }
 
 - (void) keyboardWillHide:(NSNotification *)notification{
     if (vrModeOnAD != 0) {
-        //printf("KEYBOARD HIDING\n");
-        //[[[CCDirector sharedDirector] view] setBounds:CGRectMake(0,0,windowWidth,windowHeight)];
-        
         CCScene *scene = [[CCDirector sharedDirector] runningScene];
         id layer = [scene getChildByName:@"hwLayer2" recursively:YES];
         id layer2 = [scene getChildByName:@"hwLayer3" recursively:YES];
@@ -239,9 +189,7 @@
 - (void)removeVRComponents {
     [tf resignFirstResponder];
     tf = nil;
-    /*if ([[[CCDirector sharedDirector] view] subviews].count-1 > 0) {
-     [[[CCDirector sharedDirector] view] willRemoveSubview:[[[[CCDirector sharedDirector] view] subviews] objectAtIndex:[[[CCDirector sharedDirector] view] subviews].count-1]];
-     }*/
+    
     printf("REMOVE VR COMPONENTS\n");
 }
 

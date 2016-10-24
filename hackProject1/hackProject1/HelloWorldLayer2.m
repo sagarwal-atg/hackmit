@@ -81,9 +81,6 @@
     FOVrotation = 0;
     useWalkingAnimation = 1;
     
-    //reload part
-    levelTypeHWL2 = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"levelType"];
-    
     bordersEnabled = 0;
     borderX = 1000;
     borderZ = 1000;
@@ -130,38 +127,7 @@
         }
         
         //separating sub-object systems with regular objects
-        if ([objectName isEqualToString:@"tree1"] || [objectName isEqualToString:@"tree2"] || [objectName isEqualToString:@"rcoral1"] || [objectName isEqualToString:@"fcoral2"]) {
-            objectNum1.posX = [[objectComponents objectAtIndex:1] intValue];
-            objectNum1.posZ = [[objectComponents objectAtIndex:2] intValue];
-            objectNum1.subObjectComponents = [[NSMutableArray alloc] initWithArray:[objectComponents objectAtIndex:3]];
-            objectNum1.randomflipped = [[objectComponents objectAtIndex:4] boolValue];
-            
-            if ([objectName isEqualToString:@"fcoral2"]) {
-                objectNum1.colorExposeID = [[objectComponents objectAtIndex:5] intValue];
-                objectNum1.standardScale = [[objectComponents objectAtIndex:6] floatValue]; //stores relative size value
-            }
-        } else if ([objectName isEqualToString:@"seaweed1"]) {
-            objectNum1.posX = [[objectComponents objectAtIndex:1] intValue];
-            if ([[objectComponents objectAtIndex:4] floatValue] != 0) {
-                objectNum1.posY = [[objectComponents objectAtIndex:4] floatValue] + objectNum1.minyposition;
-            } else {
-                objectNum1.posY = objectNum1.minyposition;
-            }
-            objectNum1.posZ = [[objectComponents objectAtIndex:2] intValue];
-            objectNum1.pospreXoffset = objectNum1.posX;
-            objectNum1.pospreZoffset = objectNum1.posZ;
-            objectNum1.randomflipped = [[objectComponents objectAtIndex:3] boolValue];
-            objectNum1.standardScale = [[objectComponents objectAtIndex:5] floatValue];
-            objectNum1.audiolengthcount = [[objectComponents objectAtIndex:6] boolValue];
-            objectNum1.particleDilationRate = [[objectComponents objectAtIndex:7] floatValue];
-        } else if ([objectName isEqualToString:@"fcoral1"]) {
-            objectNum1.posX = [[objectComponents objectAtIndex:1] intValue];
-            objectNum1.posY = [[objectComponents objectAtIndex:4] floatValue];
-            objectNum1.posZ = [[objectComponents objectAtIndex:2] intValue];
-            objectNum1.polygonRadius = [[objectComponents objectAtIndex:5] floatValue];
-            objectNum1.polygonSides = [[objectComponents objectAtIndex:6] intValue];
-            objectNum1.colorExposeID = [[objectComponents objectAtIndex:7] intValue];
-        } else if ([objectName isEqualToString:@"spaceEnv1"]) {
+        if ([objectName isEqualToString:@"spaceEnv1"]) {
             objectNum1.pospreXoffset = [[objectComponents objectAtIndex:1] floatValue];
             objectNum1.pospreYoffset = [[objectComponents objectAtIndex:4] floatValue];
             objectNum1.pospreZoffset = [[objectComponents objectAtIndex:2] floatValue];
@@ -232,16 +198,7 @@
             }
         } else {
             objectNum1.posX = [[objectComponents objectAtIndex:1] intValue];
-            if ([[objectComponents objectAtIndex:4] intValue] != 0 || levelTypeHWL2 == 2) {
-                objectNum1.posY = [[objectComponents objectAtIndex:4] intValue];
-            } else {
-                objectNum1.posY = objectNum1.minyposition;
-            }
-            if (levelTypeHWL2 == 2) {
-                if ([objectName isEqualToString:@"colorup1"] || [objectName isEqualToString:@"colorup2"]) {
-                    objectNum1.posY = 0;
-                }
-            }
+            objectNum1.posY = [[objectComponents objectAtIndex:4] intValue];
             objectNum1.posZ = [[objectComponents objectAtIndex:2] intValue];
             objectNum1.randomflipped = [[objectComponents objectAtIndex:3] boolValue];
             if (objectNum1.objectid >= 33 && objectNum1.objectid <= 37) {
@@ -251,11 +208,6 @@
             }
         }
         objectNum1.opacity = 0;
-        /*if (<#condition#>) { //only quick loads scenery components
-         <#statements#>
-         } else {
-         
-         }*/
         
         [self addChild:objectNum1];
         [objectTransitionArray addObject:objectNum1];
@@ -264,82 +216,63 @@
         objectComponents = nil;
     }
     
-    //initial non-randomized stage objects
-    if (levelTypeHWL2 == 2) {
-        shadeDistance = 200;
-        targetShadeDistance = 50000;
-        targetShadeDistanceDelta = 0;
-        
-        //ground & sky
-        statItem *item2 = nil;
-        item2 = [sky_3 skyItemSpace];
-        item2.opacity = 0;
-        [self addChild:item2];
-        [statItemArray addObject:item2];
-        
-        statItem *item1 = nil;
-        item1 = [ground_3 groundItemSpace];
-        item1.opacity = 0;
-        [self addChild:item1];
-        [statItemArray addObject:item1];
-        
-        item1.scaleX = item1.scaleX*isiPhone6PlusCoeff;
-        item2.scaleX = item2.scaleX*isiPhone6PlusCoeff;
-        item1.scaleY = item1.scaleY*isiPhone6PlusCoeff;
-        item2.scaleY = item2.scaleY*isiPhone6PlusCoeff;
-        
-        /*for (int int2 = 0; int2 <= 0; int2++) {
-            if (vrPrimaryInstance == 1) {
-                object *horizNum2 = nil;
-                horizNum2 = [vr7 vrElement7];
-                horizNum2.opacity = 0;
-                [self addChild:horizNum2];
-                [objectTransitionArray addObject:horizNum2];
-            } else {
-                object *horizNum2 = nil;
-                horizNum2 = [vr7_2 vrElement7_2];
-                horizNum2.opacity = 0;
-                [self addChild:horizNum2];
-                [objectTransitionArray addObject:horizNum2];
-            }
-        }*/
-        
-        if (playerID == 1) {
-            for (int int2 = 0; int2 < 6; int2++) {
-                object *objectNum1 = nil;
-                objectNum1 = [gun1 gunPart1];
-                objectNum1.pospreYoffset = -29.0-((float)int2*2.2);
-                objectNum1.FGOposXmomentum = (((float)int2*14.0)+63.0);
-                objectNum1.pospreXoffset = (cosf(P2aimAngle)*(((float)int2*13.0)+66.0));
-                objectNum1.pospreZoffset = (sinf(P2aimAngle)*(((float)int2*13.0)+66.0));
-                objectNum1.objecttag = int2;
-                [self addChild:objectNum1];
-                [objectTransitionArray addObject:objectNum1];
-                
-                object *horizNum2 = nil;
-                horizNum2 = [vr2 vrElement2];
-                [self addChild:horizNum2];
-                [objectTransitionArray addObject:horizNum2];
-            }
-        } else {
-            for (int int2 = 0; int2 <= 0; int2++) {
-                label *horizNum2 = nil;
-                horizNum2 = [timer1 timerLabel1];
-                horizNum2.opacity = 0;
-                [self addChild:horizNum2];
-                [labelArray addObject:horizNum2];
-            }
-        }
-        
-        for (int int2 = 0; int2 <= 0; int2++) {
+    shadeDistance = 200;
+    targetShadeDistance = 50000;
+    targetShadeDistanceDelta = 0;
+    
+    //ground & sky
+    statItem *item2 = nil;
+    item2 = [sky_3 skyItemSpace];
+    item2.opacity = 0;
+    [self addChild:item2];
+    [statItemArray addObject:item2];
+    
+    statItem *item1 = nil;
+    item1 = [ground_3 groundItemSpace];
+    item1.opacity = 0;
+    [self addChild:item1];
+    [statItemArray addObject:item1];
+    
+    item1.scaleX = item1.scaleX*isiPhone6PlusCoeff;
+    item2.scaleX = item2.scaleX*isiPhone6PlusCoeff;
+    item1.scaleY = item1.scaleY*isiPhone6PlusCoeff;
+    item2.scaleY = item2.scaleY*isiPhone6PlusCoeff;
+    
+    if (playerID == 1) {
+        for (int int2 = 0; int2 < 6; int2++) {
             object *objectNum1 = nil;
-            objectNum1 = [rock7 rockFinishFlag];
-            objectNum1.posX = 0;
-            objectNum1.posY = 10.0;
-            objectNum1.posZ = 3600.0;
+            objectNum1 = [gun1 gunPart1];
+            objectNum1.pospreYoffset = -29.0-((float)int2*2.2);
+            objectNum1.FGOposXmomentum = (((float)int2*14.0)+63.0);
+            objectNum1.pospreXoffset = (cosf(P2aimAngle)*(((float)int2*13.0)+66.0));
+            objectNum1.pospreZoffset = (sinf(P2aimAngle)*(((float)int2*13.0)+66.0));
+            objectNum1.objecttag = int2;
             [self addChild:objectNum1];
             [objectTransitionArray addObject:objectNum1];
+            
+            object *horizNum2 = nil;
+            horizNum2 = [vr2 vrElement2];
+            [self addChild:horizNum2];
+            [objectTransitionArray addObject:horizNum2];
         }
+    } else {
+        for (int int2 = 0; int2 <= 0; int2++) {
+            label *horizNum2 = nil;
+            horizNum2 = [timer1 timerLabel1];
+            horizNum2.opacity = 0;
+            [self addChild:horizNum2];
+            [labelArray addObject:horizNum2];
+        }
+    }
+    
+    for (int int2 = 0; int2 <= 0; int2++) {
+        object *objectNum1 = nil;
+        objectNum1 = [rock7 rockFinishFlag];
+        objectNum1.posX = 0;
+        objectNum1.posY = 10.0;
+        objectNum1.posZ = 3600.0;
+        [self addChild:objectNum1];
+        [objectTransitionArray addObject:objectNum1];
     }
 }
 
@@ -413,12 +346,12 @@
     [varsArray addObject:[NSNumber numberWithFloat:shadeDistance]]; //index = 18
     [varsArray addObject:[NSNumber numberWithFloat:targetShadeDistance]]; //index = 19
     [varsArray addObject:[NSNumber numberWithFloat:targetShadeDistanceDelta]]; //index = 20
-    [varsArray addObject:[NSNumber numberWithFloat:hoverAnimX]]; //index = 21
+    [varsArray addObject:[NSNumber numberWithFloat:0]]; //index = 21
     [varsArray addObject:[NSNumber numberWithInt:colorID]]; //index = 22
-    [varsArray addObject:[NSNumber numberWithBool:collectingColorup]]; //index = 23
-    [varsArray addObject:[NSNumber numberWithFloat:collectingColorupTrans]]; //index = 24
-    [varsArray addObject:[NSNumber numberWithFloat:colorupHypo]]; //index = 25
-    [varsArray addObject:[NSNumber numberWithBool:colorupFadeExists]]; //index = 26
+    [varsArray addObject:[NSNumber numberWithBool:0]]; //index = 23
+    [varsArray addObject:[NSNumber numberWithFloat:0]]; //index = 24
+    [varsArray addObject:[NSNumber numberWithFloat:0]]; //index = 25
+    [varsArray addObject:[NSNumber numberWithBool:0]]; //index = 26
     [varsArray addObject:[NSNumber numberWithFloat:rotationX]]; //index = 27
     [varsArray addObject:[NSNumber numberWithFloat:rotationY]]; //index = 28
     [varsArray addObject:[NSNumber numberWithFloat:mininitialYpos]]; //index = 29
@@ -481,8 +414,6 @@
     rotationX = [[playerPosition objectAtIndex:3] floatValue];
     rotationY = [[playerPosition objectAtIndex:4] floatValue];
     colorID = [[playerPosition objectAtIndex:5] intValue];
-    collectingColorup = [[playerPosition objectAtIndex:6] boolValue];
-    collectingColorupTrans = [[playerPosition objectAtIndex:7] floatValue];
     
     tempSyncUniqueIDs = uniqueIDs;
     tempSyncPhysicalProperties = physicalProperties;
@@ -520,6 +451,7 @@
         vrPrimaryInstance = 1; //sets primary instance to be left eye
     }
     vrCSedVal = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"vrCSedVal"];
+    printf("SET EYE DISTANCE\n");
 }
 
 -(BOOL)iPhone6Plus{
@@ -529,161 +461,7 @@
 }
 
 - (void)navigateMenu:(NSString *)character {
-    if (currentVRmenu == -1 && vrCSinputModeOn == 0) {
-        if ([character isEqualToString:@"w"] || [character isEqualToString:@"W"]) { //up
-            vrCSItemSelected--;
-            if (vrCSItemSelected < 0) {
-                vrCSItemSelected = vrCSItemSelectedMAX;
-            }
-        } else if ([character isEqualToString:@"s"] || [character isEqualToString:@"S"]) { //down
-            vrCSItemSelected++;
-            if (vrCSItemSelected > vrCSItemSelectedMAX) {
-                vrCSItemSelected = 0;
-            }
-        } else if ([character isEqualToString:@"a"] || [character isEqualToString:@"A"]) { //left
-            if (vrCSItemSelected == vrCSItemSelectedMAX-1) { //vr eye dist
-                vrCSedVal--;
-                if (vrCSedVal < -3) {
-                    vrCSedVal = -3;
-                }
-            }
-        } else if ([character isEqualToString:@"d"] || [character isEqualToString:@"D"]) { //right
-            if (vrCSItemSelected == vrCSItemSelectedMAX-1) { //vr eye dist
-                vrCSedVal++;
-                if (vrCSedVal > 3) {
-                    vrCSedVal = 3;
-                }
-            }
-        } else if ([character isEqualToString:@"e"] || [character isEqualToString:@"E"]) { //select
-            if (vrCSItemSelected < vrCSItemSelectedMAX-1) { //not vr eye distance thing
-                vrCSinputModeOn = 1;
-                
-                //changes menu caption image
-                for (CCSprite *sprite in objectArray) {
-                    object *currentObject = (object *)sprite;
-                    if (currentObject.vrUIelement == 1 && [currentObject isKindOfClass: [vr5 class]]) {
-                        [currentObject setTexture:[CCTexture textureWithFile:@"title_instr2.png"]];
-                    }
-                }
-            }else if (vrCSItemSelected == vrCSItemSelectedMAX) { //reset button
-                vrCSItemSelected = 0;
-                
-                vrCSedVal = 0;
-                
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_closeopen_default"] forKey:@"key_closeopen"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_pickupdrop_default"] forKey:@"key_pickupdrop"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_throwinteract_default"] forKey:@"key_throwinteract"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveforward_default"] forKey:@"key_moveforward"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_movebackward_default"] forKey:@"key_movebackward"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveleft_default"] forKey:@"key_moveleft"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveright_default"] forKey:@"key_moveright"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_jump_default"] forKey:@"key_jump"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_rotateleft_default"] forKey:@"key_rotateleft"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_rotateright_default"] forKey:@"key_rotateright"];
-                [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_exitvr_default"] forKey:@"key_exitvr"];
-                
-                for (CCLabelTTF *sprite in labelArray) {
-                    label *currentLabel = (label *)sprite;
-                    if (currentLabel.labelid == 0) {
-                        if (currentLabel.labelsubid == 0) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_closeopen"]];
-                        } else if (currentLabel.labelsubid == 1) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_pickupdrop"]];
-                        } else if (currentLabel.labelsubid == 2) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_throwinteract"]];
-                        } else if (currentLabel.labelsubid == 3) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveforward"]];
-                        } else if (currentLabel.labelsubid == 4) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_movebackward"]];
-                        } else if (currentLabel.labelsubid == 5) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveleft"]];
-                        } else if (currentLabel.labelsubid == 6) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveright"]];
-                        } else if (currentLabel.labelsubid == 7) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_jump"]];
-                        } else if (currentLabel.labelsubid == 8) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_rotateleft"]];
-                        } else if (currentLabel.labelsubid == 9) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_rotateright"]];
-                        } else if (currentLabel.labelsubid == 10) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_exitvr"]];
-                        }
-                    }
-                }
-            }
-        }
-    } else if (currentVRmenu == -1 && vrCSinputModeOn != 0) { //inputting characters
-        if (character != NULL) {
-            vrCSinputModeOn = 0;
-            
-            //changes menu caption image
-            for (CCSprite *sprite in objectArray) {
-                object *currentObject = (object *)sprite;
-                if (currentObject.vrUIelement == 1 && [currentObject isKindOfClass: [vr5 class]]) {
-                    [currentObject setTexture:[CCTexture textureWithFile:@"title_instr1.png"]];
-                }
-            }
-            
-            //saves input preferences
-            if (vrPrimaryInstance == 1) {
-                if (vrCSItemSelected == 0) { //open/close
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_closeopen"];
-                } else if (vrCSItemSelected == 1) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_pickupdrop"];
-                } else if (vrCSItemSelected == 2) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_throwinteract"];
-                } else if (vrCSItemSelected == 3) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_moveforward"];
-                } else if (vrCSItemSelected == 4) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_movebackward"];
-                } else if (vrCSItemSelected == 5) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_moveleft"];
-                } else if (vrCSItemSelected == 6) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_moveright"];
-                } else if (vrCSItemSelected == 7) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_jump"];
-                } else if (vrCSItemSelected == 8) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_rotateleft"];
-                } else if (vrCSItemSelected == 9) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_rotateright"];
-                } else if (vrCSItemSelected == 10) {
-                    [[NSUserDefaults standardUserDefaults] setObject:character forKey:@"key_exitvr"];
-                }
-            }
-            
-            //updates current character
-            if (currentVRmenu == -1) {
-                for (CCLabelTTF *sprite in labelArray) {
-                    label *currentLabel = (label *)sprite;
-                    if (currentLabel.labelsubid == vrCSItemSelected && currentLabel.labelid == 0) {
-                        if (vrCSItemSelected == 0) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_closeopen"]];
-                        } else if (vrCSItemSelected == 1) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_pickupdrop"]];
-                        } else if (vrCSItemSelected == 2) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_throwinteract"]];
-                        } else if (vrCSItemSelected == 3) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveforward"]];
-                        } else if (vrCSItemSelected == 4) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_movebackward"]];
-                        } else if (vrCSItemSelected == 5) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveleft"]];
-                        } else if (vrCSItemSelected == 6) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_moveright"]];
-                        } else if (vrCSItemSelected == 7) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_jump"]];
-                        } else if (vrCSItemSelected == 8) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_rotateleft"]];
-                        } else if (vrCSItemSelected == 9) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_rotateright"]];
-                        } else if (vrCSItemSelected == 10) {
-                            [currentLabel setString:[[NSUserDefaults standardUserDefaults] objectForKey:@"key_exitvr"]];
-                        }
-                    }
-                }
-            }
-        }
-    } else if (currentVRmenu == 0 && playerID == 1) {
+    if (currentVRmenu == 0 && playerID == 1) {
         if (character != NULL) {
             //shoot missile
             if (P2shootTimer <= 0) {
@@ -722,14 +500,10 @@
 }
 
 - (void)moveXposition:(float)force {
-    if (currentVRmenu == 0 && collectingColorup == 0) {
+    if (currentVRmenu == 0) {
         if (vrEnabled == 0) {
             if (force != 0) {
-                if (levelTypeHWL2 == 1) {
-                    momentumX = momentumX + (((force*baseWalkingSpeed) - momentumX)/20.0);
-                } else {
-                    momentumX = momentumX + (((force*baseWalkingSpeed) - momentumX)/9.0);
-                }
+                momentumX = momentumX + (((force*baseWalkingSpeed) - momentumX)/9.0);
                 tapXon = 1;
             } else {
                 tapXon = 0;
@@ -743,49 +517,11 @@
     }
 }
 
-- (void)moveYposition:(bool)force {
-    if (currentVRmenu == 0 && collectingColorup == 0) {
-        if (force != 0) { //up
-            tapYon = 1;
-            if (playerGravityEnabled == 1) {
-                if (positionY <= (minYposold-momentumY) && positionY >= (minYposold-momentumY)) {
-                    if (playerInLiquid == 1 && positionYanimoffset > -8.5 && positionYanimoffsettimer > 30) {
-                        momentumY = 3.0;
-                    } else if (playerInLiquid == 0) {
-                        if (levelTypeHWL2 == 1) {
-                            momentumY = 2.5;
-                        } else if (levelTypeHWL2 != 2) {
-                            momentumY = 4.0;
-                        }
-                    }
-                }
-            } else {
-                momentumY = 3.5;
-            }
-            
-            //vr safety
-            if (vrEnabled != 0) {
-                if (playerInLiquid != 0 && positionY <= minYpos+1.0 && onTopOfFloatingObjects == 0) {
-                    jumpInLiquidQueued = 1;
-                } else {
-                    tapYon = 0;
-                }
-            }
-        } else {
-            tapYon = 0;
-        }
-    }
-}
-
 - (void)moveZposition:(float)force {
-    if (currentVRmenu == 0 && collectingColorup == 0) {
+    if (currentVRmenu == 0) {
         if (vrEnabled == 0) {
             if (force != 0) {
-                if (levelTypeHWL2 == 1) {
-                    momentumZ = momentumZ + (((force*baseWalkingSpeed) - momentumZ)/20.0);
-                } else {
-                    momentumZ = momentumZ + (((force*baseWalkingSpeed) - momentumZ)/9.0);
-                }
+                momentumZ = momentumZ + (((force*baseWalkingSpeed) - momentumZ)/9.0);
                 tapZon = 1;
             } else {
                 tapZon = 0;
@@ -800,7 +536,7 @@
 }
 
 - (void)lookDirection:(float)tapxdiff :(float)tapydiff {
-    if (currentVRmenu == 0 && collectingColorup == 0) {
+    if (currentVRmenu == 0) {
         //printf("xdif: %f, ydif: %f\n",tapxdiff,tapydiff);
         if (rotationX > (rotationdragX+(tapxdiff*isiPhone6PlusCoeff)+0.05)) {
             momentumrotationX = momentumrotationX + ((-(tapxdiff*isiPhone6PlusCoeff*0.0014) - momentumrotationX)/2.2);
@@ -828,235 +564,6 @@
 
 - (void)setFOV:(float)value {
     FOVvalue = value;
-}
-
-- (void)dropgrabObject:(float)tapx :(float)tapy {
-    if (currentVRmenu == 0 && collectingColorup == 0) {
-        if (grabbedobject == 0) {
-            grabbedobject = 1;
-            grabbedObjectTimer = 10;
-            
-            for (CCSprite *sprite in objectArray) {
-                object *currentObject = (object *)sprite;
-                if (currentObject.objectBeingHighlighted == 1 && currentObject.isasubobject == 0 && currentObject.playerusable == 1) {
-                    currentObject.objectgrabbed = 1;
-                }
-            }
-        } else {
-            grabbedobject = 0;
-            
-            for (CCSprite *sprite in objectArray) {
-                object *currentObject = (object *)sprite;
-                if (currentObject.objectgrabbed == 1) {
-                    currentObject.objectgrabbed = 0;
-                }
-            }
-        }
-    }
-}
-
-- (void)draggrabbedObject:(float)initialx :(float)tapx {
-    if (grabbedobject == 1 && currentVRmenu == 0 && collectingColorup == 0) {
-        for (CCSprite *sprite in objectArray) {
-            object *currentObject = (object *)sprite;
-            if (currentObject.objectgrabbed == 1 && currentObject.isasubobject == 0) {
-                if (grabobjectdrag == 0) {
-                    grabobjectsavedrotation = currentObject.rotationoffsetx2;
-                    grabobjectdrag = 1;
-                }
-                currentObject.rotationtargetoffsetx2 = grabobjectsavedrotation + ((float)(tapx-initialx)*0.015);
-                //printf("%f, %f\n",(tapx - initialx),currentObject.rotationoffsetx2);
-            }
-        }
-    }
-}
-
-- (void)stopdraggrabbedObject {
-    grabobjectdrag = 0;
-}
-
-- (void)doPlayerAction:(int)type {
-    CGSize winSize = [[CCDirector sharedDirector] viewSize];
-    
-    if (currentVRmenu == 0) {
-        printf("ACTION TYPE: %i\n",type);
-        
-        if (playerDoingAction == 0 && type == 0 && collectingColorup == 0) { //normal action
-            playerDoingAction = 1;
-            playerRedoActionTimer = 28;
-            playerFOVchangeTimer = 24;
-            
-            //reciprocated player action
-            if (vrPrimaryInstance == 1) {
-                MenuLayer * mnLayer = (MenuLayer *)[self.parent getChildByName:@"mnLayer" recursively:1];
-                [mnLayer reciprocatePlayerAction];
-            }
-            
-            //throws grabbed object
-            if (grabbedobject == 1) {
-                for (CCSprite *sprite in objectArray) {
-                    object *currentObject = (object *)sprite;
-                    if (currentObject.objectgrabbed == 1 && currentObject.objectusemode == 0) { //throw object
-                        currentObject.objectgrabbed = 0;
-                        grabbedobject = 0;
-                        if (levelTypeHWL2 == 1) {
-                            currentObject.posYmomentum = (3.7-((rotationY+((90.0+(float)gyroRollOffset)*0.08))*0.66))*0.73*0.4;
-                        } else if (levelTypeHWL2 == 2) {
-                            currentObject.posYmomentum = (-(rotationY+((90.0+(float)gyroRollOffset)*0.08))*0.66)*0.73*0.4;
-                        } else {
-                            currentObject.posYmomentum = (3.7-((rotationY+((90.0+(float)gyroRollOffset)*0.08))*0.66))*0.73;
-                        }
-                        
-                        //x&z momentum
-                        //gets sin&cos (angle) to otherObject
-                        float var1 = asinf((positionZ-currentObject.posZ)/(sqrtf(powf(positionX-currentObject.posX, 2) + powf((positionZ-currentObject.posZ), 2)))); //negative = down, positive = up
-                        float var2 = asinf((positionX-currentObject.posX)/(sqrtf(powf(positionX-currentObject.posX, 2) + powf((positionZ-currentObject.posZ), 2)))); //negative = left, positive = right
-                        float var3 = 0;
-                        float var4 = 0;
-                        //sets closest point to other object
-                        if (var2 >= 0) {
-                            if (currentObject.objectheavy == 0) {
-                                var3 = -(cosf(var1)*7.0);
-                                var4 = -(sinf(var1)*7.0);
-                            } else {
-                                var3 = -(cosf(var1)*4.0);
-                                var4 = -(sinf(var1)*4.0);
-                            }
-                        } else if (var2 < 0) {
-                            if (currentObject.objectheavy == 0) {
-                                var3 = (cosf(var1)*7.0);
-                                var4 = -(sinf(var1)*7.0);
-                            } else {
-                                var3 = (cosf(var1)*4.0);
-                                var4 = -(sinf(var1)*4.0);
-                            }
-                        }
-                        if (levelTypeHWL2 == 2) {
-                            currentObject.posXmomentum = var3*0.73*0.25;
-                            currentObject.posZmomentum = var4*0.73*0.25;
-                        } else if (levelTypeHWL2 == 1) {
-                            currentObject.posXmomentum = var3*0.73*0.35;
-                            currentObject.posZmomentum = var4*0.73*0.35;
-                        } else {
-                            currentObject.posXmomentum = var3*0.73;
-                            currentObject.posZmomentum = var4*0.73;
-                        }
-                    } else if (currentObject.objectgrabbed == 1 && currentObject.objectusemode == 1) { //usable object
-                        currentObject.usableanimtoggle = 1;
-                        for (CCSprite *sprite in objectArray) {
-                            object *otherObject = (object *)sprite;
-                            if (otherObject != currentObject && otherObject.objectgrabbed == 0 && otherObject.objectusescollisions == 1) {
-                                if (otherObject.hypotenusetoplayer <= 100 && otherObject.hypotenusetoplayer > 0 && otherObject.postposZ > positionZ && otherObject.posY > (positionY-playerHeight)+1 && otherObject.posY < (positionY-playerHeight)+25 && otherObject.position.x > winSize.width*0.28 && otherObject.position.x < winSize.width*0.72) {
-                                    //x&z momentum
-                                    //gets sin&cos (angle) to otherObject
-                                    float var1 = asinf((positionZ-otherObject.posZ)/(sqrtf(powf(positionX-otherObject.posX, 2) + powf((positionZ-otherObject.posZ), 2)))); //negative = down, positive = up
-                                    float var2 = asinf((positionX-otherObject.posX)/(sqrtf(powf(positionX-otherObject.posX, 2) + powf((positionZ-otherObject.posZ), 2)))); //negative = left, positive = right
-                                    float var3 = 0;
-                                    float var4 = 0;
-                                    //sets closest point to other object
-                                    if (var2 >= 0) {
-                                        if (otherObject.objectheavy == 0) {
-                                            var3 = -(cosf(var1)*11.5);
-                                            var4 = -(sinf(var1)*11.5);
-                                        } else {
-                                            var3 = -(cosf(var1)*6.0);
-                                            var4 = -(sinf(var1)*6.0);
-                                        }
-                                    } else if (var2 < 0) {
-                                        if (currentObject.objectheavy == 0) {
-                                            var3 = (cosf(var1)*11.5);
-                                            var4 = -(sinf(var1)*11.5);
-                                        } else {
-                                            var3 = (cosf(var1)*6.0);
-                                            var4 = -(sinf(var1)*6.0);
-                                        }
-                                    }
-                                    otherObject.posXmomentum = otherObject.posXmomentum+var3;
-                                    otherObject.posZmomentum = otherObject.posZmomentum+var4;
-                                    if (playPunchNoise <= 0) {
-                                        playPunchNoise = 2;
-                                    }
-                                } else if (otherObject.hypotenusetoplayer <= 70 && otherObject.hypotenusetoplayer > 0 && otherObject.posY >= (positionY-playerHeight)+25) {
-                                    otherObject.refreshminypos = 1;
-                                }
-                            }
-                        }
-                    }
-                }
-            } else { //no grabbed object
-                for (CCSprite *sprite in objectArray) {
-                    object *currentObject = (object *)sprite;
-                    if (currentObject.hypotenusetoplayer <= 75 && currentObject.hypotenusetoplayer > 0 && currentObject.postposZ > positionZ && currentObject.posY > (positionY-playerHeight)+1 && currentObject.posY < (positionY-playerHeight)+25 && currentObject.position.x > winSize.width*0.28 && currentObject.position.x < winSize.width*0.72 && currentObject.objectusescollisions == 1 && currentObject.canbePickedUp == 0) {
-                        //x momentum
-                        //gets sin&cos (angle) to otherObject
-                        float var1 = asinf((positionZ-currentObject.posZ)/(sqrtf(powf(positionX-currentObject.posX, 2) + powf((positionZ-currentObject.posZ), 2)))); //negative = down, positive = up
-                        float var2 = asinf((positionX-currentObject.posX)/(sqrtf(powf(positionX-currentObject.posX, 2) + powf((positionZ-currentObject.posZ), 2)))); //negative = left, positive = right
-                        float var3 = 0;
-                        float var4 = 0;
-                        //sets closest point to other object
-                        if (var2 >= 0) {
-                            if (currentObject.objectheavy == 0) {
-                                var3 = -(cosf(var1)*5.0);
-                                var4 = -(sinf(var1)*5.0);
-                            } else {
-                                var3 = -(cosf(var1)*2.5);
-                                var4 = -(sinf(var1)*2.5);
-                            }
-                        } else if (var2 < 0) {
-                            if (currentObject.objectheavy == 0) {
-                                var3 = (cosf(var1)*5.0);
-                                var4 = -(sinf(var1)*5.0);
-                            } else {
-                                var3 = (cosf(var1)*2.5);
-                                var4 = -(sinf(var1)*2.5);
-                            }
-                        }
-                        currentObject.posXmomentum = currentObject.posXmomentum+var3;
-                        currentObject.posZmomentum = currentObject.posZmomentum+var4;
-                        if (currentObject.objectheavy == 0) { //determines min amount of time for collision to be ignored
-                            currentObject.exemptFromPlayerCollisionsTimer = 3;
-                        } else {
-                            currentObject.exemptFromPlayerCollisionsTimer = 0;
-                        }
-                        if (playPunchNoise <= 0) {
-                            playPunchNoise = 2;
-                        }
-                    } else if (currentObject.hypotenusetoplayer <= 75 && currentObject.hypotenusetoplayer > 0 && currentObject.posY >= (positionY-playerHeight)+25) {
-                        currentObject.refreshminypos = 1;
-                    }
-                }
-            }
-            
-            //audio
-            if (vrPrimaryInstance == 1) {
-                [[OALSimpleAudio sharedInstance] playEffect:@"swoosh.wav"];
-            }
-            
-            FOVvalue = FOVvalueinitial * 1.0333;
-            FOVrotation = 0;
-            FOVrotationscale = 0.9;
-            int randnum1 = arc4random() % 2;
-            if (randnum1 == 0 || vrEnabled != 0) {
-                FOVrotationvel1 = 2.5;
-                FOVrotationtoggle = 0;
-            } else {
-                FOVrotationvel1 = -2.5;
-                FOVrotationtoggle = 1;
-            }
-        } else if (playerDoingAction == 0 && type == 6) { //toggle vr mode
-            playerDoingAction = 1;
-            playerRedoActionTimer = 28;
-            playerFOVchangeTimer = 24;
-            
-            //reciprocated player action
-            if (vrPrimaryInstance == 1) {
-                [self quickSaveVars];
-                CCScene *scene = [CCDirector sharedDirector].runningScene;
-                HelloWorldLayer *mainScene = (HelloWorldLayer *)scene;
-                [mainScene restartWithVRMode:1];
-            }
-        }
-    }
 }
 
 - (void)act {
@@ -1096,12 +603,7 @@
         shadeDistance = [[varsArray objectAtIndex:18] floatValue];
         targetShadeDistance = [[varsArray objectAtIndex:19] floatValue];
         targetShadeDistanceDelta = [[varsArray objectAtIndex:20] floatValue];
-        hoverAnimX = [[varsArray objectAtIndex:21] floatValue];
         colorID = [[varsArray objectAtIndex:22] intValue];
-        collectingColorup = [[varsArray objectAtIndex:23] boolValue];
-        collectingColorupTrans = [[varsArray objectAtIndex:24] floatValue];
-        colorupHypo = [[varsArray objectAtIndex:25] floatValue];
-        colorupFadeExists = [[varsArray objectAtIndex:26] boolValue];
         if (vrEnabled == 0) {
             rotationX = [[varsArray objectAtIndex:27] floatValue];
             rotationY = [[varsArray objectAtIndex:28] floatValue];

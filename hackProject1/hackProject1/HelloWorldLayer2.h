@@ -30,9 +30,9 @@
     float minYpos;
     float minYposold;
     float minYpospotential;
-    float momentumX; //only to be used by joystick
+    float momentumX;
     float momentumY;
-    float momentumZ; //only to be used by joystick
+    float momentumZ;
     float momentumX2; //can be independently controlled
     float momentumY2; //technically useless
     float momentumZ2; //can be independently controlled
@@ -199,21 +199,8 @@
     NSMutableArray *polygonArray;
     NSMutableArray *polygonRemovalArray;
     
-    //chromavera-2 specific
-    float hoverAnimX;
-    int colorID; //1=black
-    bool collectingColorup;
-    float collectingColorupTrans;
-    float colorupHypo;
-    bool colorupFadeExists;
-    bool jumpInLiquidQueued;
-    float arrowAnimX;
-    float colorupX;
-    float colorupZ;
-    bool facingColorup;
-    int notFacingRightDirectionTimer;
-    int levelTypeHWL2; //types correspond with those in HelloWorldLayer.h
-    int bubbleTimer1;
+    //hack
+    int colorID;
     NSMutableArray *randNumberArray;
     int randPickIndex;
     NSMutableArray *randFishNumberArray;
@@ -230,16 +217,11 @@
 @property (nonatomic, retain) CMMotionManager *motionManager;
 
 - (void)moveXposition:(float)force;
-- (void)moveYposition:(bool)force;
 - (void)moveZposition:(float)force;
 - (void)navigateMenu:(NSString *)character;
 - (void)lookDirection:(float)tapxdiff :(float)tapydiff;
 - (void)lookStop;
 - (void)setFOV:(float)value;
-- (void)dropgrabObject:(float)tapx :(float)tapy;
-- (void)draggrabbedObject:(float)initialx :(float)tapx;
-- (void)stopdraggrabbedObject;
-- (void)doPlayerAction:(int)type;
 
 - (void)setEyeDistance:(float)dist;
 - (void)setCutsceneActiveHWL:(int)val;

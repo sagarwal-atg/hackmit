@@ -12,14 +12,13 @@
     float score2;
     int scoretoggle;
     
-    int levelTypeHWL;
-    
     int playerIDHWL; //distinguished between biker and shooter
     
     NSMutableArray *currentTouchesX;
     NSMutableArray *currentTouchesY;
     
     FIRDatabaseReference *ref;
+    bool queueUpdate;
 }
 
 - (void)getPrimaryInstanceSyncData:(NSMutableArray *)uniqueIDs :(NSMutableArray *)physicalProperties :(NSMutableArray *)playerPosition;

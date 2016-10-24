@@ -8,28 +8,81 @@
 @implementation HelloWorldLayer
 
 - (void)generateNewLevel {
-    //picking level
-    levelTypeHWL = 2;
-    
-    [[NSUserDefaults standardUserDefaults] setInteger:levelTypeHWL forKey:@"levelType"];
+    [[NSUserDefaults standardUserDefaults] setInteger:2 forKey:@"levelType"];
     
     //terrain generation
     NSMutableArray *generatedObjects = [[NSMutableArray alloc] init];
     NSMutableArray *heatmapwradius = [[NSMutableArray alloc] init];
     
-    //level-specific objects
-    if (levelTypeHWL == 2) {
-        //faded background shines
-        for (int int1 = 0; int1 <= 70; int1++) {
-            NSString *objectName0 = @"spaceEnv1";
+    //faded background shines
+    for (int int1 = 0; int1 <= 70; int1++) {
+        NSString *objectName0 = @"spaceEnv1";
+        
+        int randNumArc = arc4random() % 120;
+        float var1 = (((float)randNumArc/120.0)*(2*3.1415926535897932));
+        int randHypoCoeff = (arc4random() % 25) + 200;
+        float randnumPosX = (cosf(var1)*((float)randHypoCoeff*1000.0));
+        float randnumPosZ = (sinf(var1)*((float)randHypoCoeff*1000.0));
+        int randYpos = (arc4random() % 101) - 50;
+        float randnumPosY = (float)randYpos*200.0;
+        int randSizeCoeff = (arc4random() % 71) + 10;
+        
+        int colorExposeRandom = arc4random() % 10;
+        int colorExposeVar = 0;
+        if (colorExposeRandom == 0 || colorExposeRandom == 1) {
+            colorExposeVar = 2;
+        } else if (colorExposeRandom == 2) {
+            colorExposeVar = 5;
+        } else if (colorExposeRandom == 3) {
+            colorExposeVar = 6;
+        } else if (colorExposeRandom == 4) {
+            colorExposeVar = 8;
+        } else if (colorExposeRandom == 5) {
+            colorExposeVar = 9;
+        } else if (colorExposeRandom == 6) {
+            colorExposeVar = 10;
+        } else if (colorExposeRandom >= 7 && colorExposeRandom <= 9) {
+            colorExposeVar = 11;
+        }
+        
+        NSMutableArray *object0Attributes = [[NSMutableArray alloc] initWithObjects:objectName0, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:0], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithInt:colorExposeVar], nil];
+        [generatedObjects addObject:object0Attributes];
+        object0Attributes = nil;
+        
+        objectName0 = nil;
+    }
+    
+    //foreground shine clusters
+    for (int int1 = 0; int1 <= 3; int1++) {
+        int locX = (arc4random() % 2001) - 1000;
+        int locZ = (arc4random() % 2001) - 1000;
+        
+        float hypo = sqrtf(powf(((float)locX), 2.0) + powf(((float)locZ), 2.0));
+        bool condition = 0;
+        while (condition == 0) {
+            locX = (arc4random() % 2001) - 1000;
+            locZ = (arc4random() % 2001) - 1000;
+            hypo = sqrtf(powf(((float)locX), 2.0) + powf(((float)locZ), 2.0));
+            
+            //radius condition
+            condition = 1;
+            if (hypo > 900) {
+                condition = 0;
+            }
+        }
+        
+        //creates shade particles nearby
+        int randNumOfThings = arc4random() % 4;
+        for (int int1 = 0; int1 <= 5+randNumOfThings; int1++) {
+            NSString *objectName0 = @"spaceEnv2";
             
             int randNumArc = arc4random() % 120;
             float var1 = (((float)randNumArc/120.0)*(2*3.1415926535897932));
-            int randHypoCoeff = (arc4random() % 25) + 200;
-            float randnumPosX = (cosf(var1)*((float)randHypoCoeff*1000.0));
-            float randnumPosZ = (sinf(var1)*((float)randHypoCoeff*1000.0));
-            int randYpos = (arc4random() % 101) - 50;
-            float randnumPosY = (float)randYpos*200.0;
+            int randHypoCoeff = arc4random() % 100;
+            float randnumPosX = (cosf(var1)*((float)randHypoCoeff+1.0))+(float)locX;
+            float randnumPosZ = (sinf(var1)*((float)randHypoCoeff+1.0))+(float)locZ;
+            int randYpos = (arc4random() % 140) - 70;
+            float randnumPosY = (float)randYpos;
             int randSizeCoeff = (arc4random() % 71) + 10;
             
             int colorExposeRandom = arc4random() % 10;
@@ -56,316 +109,161 @@
             
             objectName0 = nil;
         }
+    }
+    
+    //planets
+    int randNumOfPlanets = arc4random() % 2;
+    for (int int1 = 0; int1 <= randNumOfPlanets+3; int1++) {
+        NSString *objectName0 = @"star2";
         
-        //foreground shine clusters
-        for (int int1 = 0; int1 <= 3; int1++) {
-            int locX = (arc4random() % 2001) - 1000;
-            int locZ = (arc4random() % 2001) - 1000;
+        int randNumArc = arc4random() % 350;
+        float var1 = (((float)randNumArc/350.0)*(2*3.1415926535897932));
+        int randHypoCoeff = arc4random() % 2000;
+        float randnumPosX = (cosf(var1)*((float)randHypoCoeff+2600.0));
+        float randnumPosZ = (sinf(var1)*((float)randHypoCoeff+2600.0));
+        int randYpos = (arc4random() % 1200) - 600;
+        float randnumPosY = (float)randYpos;
+        int randSizeCoeff = (arc4random() % 18) + 10;
+        
+        int colorExposeRandom = arc4random() % 11;
+        int colorExposeVar = 0;
+        
+        if (colorExposeRandom == 0 || colorExposeRandom == 1) {
+            colorExposeVar = 2;
+        } else if (colorExposeRandom == 2 || colorExposeRandom == 3) {
+            colorExposeVar = 3;
+        } else if (colorExposeRandom == 4 || colorExposeRandom == 5) {
+            colorExposeVar = 5;
+        } else if (colorExposeRandom == 6 || colorExposeRandom == 7) {
+            colorExposeVar = 6;
+        } else if (colorExposeRandom == 8 || colorExposeRandom == 9) {
+            colorExposeVar = 9;
+        } else if (colorExposeRandom == 10) {
+            colorExposeVar = 11;
+        }
+        bool flipped = arc4random() % 2;
+        
+        NSMutableArray *object0Attributes = [[NSMutableArray alloc] initWithObjects:objectName0, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:flipped], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithInt:colorExposeVar], nil];
+        [generatedObjects addObject:object0Attributes];
+        object0Attributes = nil;
+        
+        objectName0 = nil;
+        
+        int randNeedsRing = arc4random() % 3;
+        if (randNeedsRing == 1) {
+            NSString *objectName1 = @"star2ring";
             
-            float hypo = sqrtf(powf(((float)locX), 2.0) + powf(((float)locZ), 2.0));
-            bool condition = 0;
-            while (condition == 0) {
-                locX = (arc4random() % 2001) - 1000;
-                locZ = (arc4random() % 2001) - 1000;
-                hypo = sqrtf(powf(((float)locX), 2.0) + powf(((float)locZ), 2.0));
-                
-                //radius condition
-                condition = 1;
-                if (hypo > 900) {
-                    condition = 0;
-                }
+            int colorExposeRandom2 = arc4random() % 5;
+            int colorExposeVar2 = 0;
+            
+            if (colorExposeRandom2 == 0) {
+                colorExposeVar2 = 4;
+            } else if (colorExposeRandom2 == 1) {
+                colorExposeVar2 = 8;
+            } else if (colorExposeRandom2 == 2) {
+                colorExposeVar2 = 9;
+            } else if (colorExposeRandom2 == 3) {
+                colorExposeVar2 = 10;
+            } else if (colorExposeRandom2 == 4) {
+                colorExposeVar2 = 11;
             }
             
-            //creates shade particles nearby
-            int randNumOfThings = arc4random() % 4;
-            for (int int1 = 0; int1 <= 5+randNumOfThings; int1++) {
-                NSString *objectName0 = @"spaceEnv2";
-                
-                int randNumArc = arc4random() % 120;
-                float var1 = (((float)randNumArc/120.0)*(2*3.1415926535897932));
-                int randHypoCoeff = arc4random() % 100;
-                float randnumPosX = (cosf(var1)*((float)randHypoCoeff+1.0))+(float)locX;
-                float randnumPosZ = (sinf(var1)*((float)randHypoCoeff+1.0))+(float)locZ;
-                int randYpos = (arc4random() % 140) - 70;
-                float randnumPosY = (float)randYpos;
-                int randSizeCoeff = (arc4random() % 71) + 10;
-                
-                int colorExposeRandom = arc4random() % 10;
-                int colorExposeVar = 0;
-                if (colorExposeRandom == 0 || colorExposeRandom == 1) {
-                    colorExposeVar = 2;
-                } else if (colorExposeRandom == 2) {
-                    colorExposeVar = 5;
-                } else if (colorExposeRandom == 3) {
-                    colorExposeVar = 6;
-                } else if (colorExposeRandom == 4) {
-                    colorExposeVar = 8;
-                } else if (colorExposeRandom == 5) {
-                    colorExposeVar = 9;
-                } else if (colorExposeRandom == 6) {
-                    colorExposeVar = 10;
-                } else if (colorExposeRandom >= 7 && colorExposeRandom <= 9) {
-                    colorExposeVar = 11;
-                }
-                
-                NSMutableArray *object0Attributes = [[NSMutableArray alloc] initWithObjects:objectName0, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:0], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithInt:colorExposeVar], nil];
-                [generatedObjects addObject:object0Attributes];
-                object0Attributes = nil;
-                
-                objectName0 = nil;
-            }
+            NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName1, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:flipped], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithInt:colorExposeVar2], nil];
+            [generatedObjects addObject:object1Attributes];
+            object1Attributes = nil;
+            
+            objectName1 = nil;
+        }
+    }
+    
+    //nearer stars
+    for (int int1 = 0; int1 <= 85; int1++) {
+        NSString *objectName0 = @"star1";
+        
+        int randNumArc = arc4random() % 180;
+        float var1 = (((float)randNumArc/180.0)*(2*3.1415926535897932));
+        int randHypoCoeff = (arc4random() % 130) + 60;
+        float randnumPosX = (cosf(var1)*((float)randHypoCoeff*1000.0));
+        float randnumPosZ = (sinf(var1)*((float)randHypoCoeff*1000.0));
+        
+        int randYpos = (arc4random() % 701) - 350;
+        float randnumPosY = (float)randYpos*200.0;
+        if (int1 > 32) {
+            randYpos = (arc4random() % 151) - 75;
+            randnumPosY = (float)randYpos*200.0;
         }
         
-        //planets
-        int randNumOfPlanets = arc4random() % 2;
-        for (int int1 = 0; int1 <= randNumOfPlanets+3; int1++) {
-            NSString *objectName0 = @"star2";
-            
-            int randNumArc = arc4random() % 350;
-            float var1 = (((float)randNumArc/350.0)*(2*3.1415926535897932));
-            int randHypoCoeff = arc4random() % 2000;
-            float randnumPosX = (cosf(var1)*((float)randHypoCoeff+2600.0));
-            float randnumPosZ = (sinf(var1)*((float)randHypoCoeff+2600.0));
-            int randYpos = (arc4random() % 1200) - 600;
-            float randnumPosY = (float)randYpos;
-            int randSizeCoeff = (arc4random() % 18) + 10;
-            
-            int colorExposeRandom = arc4random() % 11;
-            int colorExposeVar = 0;
-            
-            if (colorExposeRandom == 0 || colorExposeRandom == 1) {
-                colorExposeVar = 2;
-            } else if (colorExposeRandom == 2 || colorExposeRandom == 3) {
-                colorExposeVar = 3;
-            } else if (colorExposeRandom == 4 || colorExposeRandom == 5) {
-                colorExposeVar = 5;
-            } else if (colorExposeRandom == 6 || colorExposeRandom == 7) {
-                colorExposeVar = 6;
-            } else if (colorExposeRandom == 8 || colorExposeRandom == 9) {
-                colorExposeVar = 9;
-            } else if (colorExposeRandom == 10) {
-                colorExposeVar = 11;
-            }
-            bool flipped = arc4random() % 2;
-            
-            NSMutableArray *object0Attributes = [[NSMutableArray alloc] initWithObjects:objectName0, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:flipped], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithInt:colorExposeVar], nil];
-            [generatedObjects addObject:object0Attributes];
-            object0Attributes = nil;
-            
-            objectName0 = nil;
-            
-            int randNeedsRing = arc4random() % 3;
-            if (randNeedsRing == 1) {
-                NSString *objectName1 = @"star2ring";
-                
-                int colorExposeRandom2 = arc4random() % 5;
-                int colorExposeVar2 = 0;
-                
-                if (colorExposeRandom2 == 0) {
-                    colorExposeVar2 = 4;
-                } else if (colorExposeRandom2 == 1) {
-                    colorExposeVar2 = 8;
-                } else if (colorExposeRandom2 == 2) {
-                    colorExposeVar2 = 9;
-                } else if (colorExposeRandom2 == 3) {
-                    colorExposeVar2 = 10;
-                } else if (colorExposeRandom2 == 4) {
-                    colorExposeVar2 = 11;
-                }
-                
-                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName1, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:flipped], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithInt:colorExposeVar2], nil];
-                [generatedObjects addObject:object1Attributes];
-                object1Attributes = nil;
-                
-                objectName1 = nil;
-            }
+        int randSizeCoeff = (arc4random() % 6) + 10;
+        
+        bool twinkling = arc4random() % 2;
+        float twinklingOffset = 0;
+        if (twinkling) {
+            int randOffset = arc4random() % 41;
+            twinklingOffset = ((float)randOffset/40.0)*(2*3.1415926535897932);
         }
         
-        //nearer stars
-        for (int int1 = 0; int1 <= 85; int1++) {
-            NSString *objectName0 = @"star1";
-            
-            int randNumArc = arc4random() % 180;
-            float var1 = (((float)randNumArc/180.0)*(2*3.1415926535897932));
-            int randHypoCoeff = (arc4random() % 130) + 60;
-            float randnumPosX = (cosf(var1)*((float)randHypoCoeff*1000.0));
-            float randnumPosZ = (sinf(var1)*((float)randHypoCoeff*1000.0));
-            
-            int randYpos = (arc4random() % 701) - 350;
-            float randnumPosY = (float)randYpos*200.0;
-            if (int1 > 32) {
-                randYpos = (arc4random() % 151) - 75;
-                randnumPosY = (float)randYpos*200.0;
-            }
-            
-            int randSizeCoeff = (arc4random() % 6) + 10;
-            
-            bool twinkling = arc4random() % 2;
-            float twinklingOffset = 0;
-            if (twinkling) {
-                int randOffset = arc4random() % 41;
-                twinklingOffset = ((float)randOffset/40.0)*(2*3.1415926535897932);
-            }
-            
-            int randOpac = arc4random() % 51;
-            
-            NSMutableArray *object0Attributes = [[NSMutableArray alloc] initWithObjects:objectName0, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:0], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithFloat:twinklingOffset], [NSNumber numberWithFloat:((float)randOpac+40.0)/90.0], nil];
-            [generatedObjects addObject:object0Attributes];
-            object0Attributes = nil;
-            
-            objectName0 = nil;
+        int randOpac = arc4random() % 51;
+        
+        NSMutableArray *object0Attributes = [[NSMutableArray alloc] initWithObjects:objectName0, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:0], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithFloat:twinklingOffset], [NSNumber numberWithFloat:((float)randOpac+40.0)/90.0], nil];
+        [generatedObjects addObject:object0Attributes];
+        object0Attributes = nil;
+        
+        objectName0 = nil;
+    }
+    
+    //further stars
+    for (int int1 = 0; int1 <= 80; int1++) {
+        NSString *objectName0 = @"star1";
+        
+        int randNumArc = arc4random() % 180;
+        float var1 = (((float)randNumArc/180.0)*(2*3.1415926535897932));
+        int randHypoCoeff = (arc4random() % 80) + 210;
+        float randnumPosX = (cosf(var1)*((float)randHypoCoeff*1000.0));
+        float randnumPosZ = (sinf(var1)*((float)randHypoCoeff*1000.0));
+        
+        int randYpos = (arc4random() % 101) - 50;
+        float randnumPosY = (float)randYpos*200.0;
+        
+        int randSizeCoeff = (arc4random() % 4) + 9;
+        
+        bool twinkling = arc4random() % 2;
+        float twinklingOffset = 0;
+        if (twinkling) {
+            int randOffset = arc4random() % 41;
+            twinklingOffset = ((float)randOffset/40.0)*(2*3.1415926535897932);
         }
         
-        //further stars
-        for (int int1 = 0; int1 <= 80; int1++) {
-            NSString *objectName0 = @"star1";
-            
-            int randNumArc = arc4random() % 180;
-            float var1 = (((float)randNumArc/180.0)*(2*3.1415926535897932));
-            int randHypoCoeff = (arc4random() % 80) + 210;
-            float randnumPosX = (cosf(var1)*((float)randHypoCoeff*1000.0));
-            float randnumPosZ = (sinf(var1)*((float)randHypoCoeff*1000.0));
-            
-            int randYpos = (arc4random() % 101) - 50;
-            float randnumPosY = (float)randYpos*200.0;
-            
-            int randSizeCoeff = (arc4random() % 4) + 9;
-            
-            bool twinkling = arc4random() % 2;
-            float twinklingOffset = 0;
-            if (twinkling) {
-                int randOffset = arc4random() % 41;
-                twinklingOffset = ((float)randOffset/40.0)*(2*3.1415926535897932);
-            }
-            
-            int randOpac = arc4random() % 51;
-            
-            NSMutableArray *object0Attributes = [[NSMutableArray alloc] initWithObjects:objectName0, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:0], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithFloat:twinklingOffset], [NSNumber numberWithFloat:((float)randOpac+40.0)/90.0], nil];
-            [generatedObjects addObject:object0Attributes];
-            object0Attributes = nil;
-            
-            objectName0 = nil;
-        }
+        int randOpac = arc4random() % 51;
         
-        //environment
-        //FLAG - IMPORTANT BOOLEAN HERE
-        playerIDHWL = 1;
-        [[NSUserDefaults standardUserDefaults] setInteger:playerIDHWL forKey:@"playerID"];
-        if (playerIDHWL == 0) {
-            
-            //clears database
-            [[ref child:@"asteroids"] removeValue];
-            [[ref child:@"projectilesToAdd"] removeValue];
-            [[[ref child:@"angle"] child:@"angle"] setValue:[NSNumber numberWithFloat:0.0]];
-            [[[ref child:@"rpm"] child:@"rpm"] setValue:[NSNumber numberWithFloat:0.0]];
-            
-            //initial asteroids
-            int asteroidID = 0;
-            int numAsts = 0;
-            for (int int1 = 0; int1 <= 11; int1++) {
-                for (int int2 = 0; int2 <= 15; int2++) {
-                    
-                    int createAsteroid = arc4random() % 3;
-                    
-                    if (createAsteroid == 1) {
-                        numAsts++;
-                        NSString *objectName = @"rock3";
-                        int randName = arc4random() % 4;
-                        if (randName == 1) {
-                            objectName = @"rock4";
-                        } else if (randName == 2) {
-                            objectName = @"rock5";
-                        } else if (randName == 3) {
-                            objectName = @"rock6";
-                        }
-                        
-                        float randnum1 = ((float)int1-5.0)*88.0;
-                        float randnum2 = ((float)int2+1.2)*240.0;
-                        
-                        int randnum4 = (arc4random() % 2001) - 1000;
-                        int randnum5 = (arc4random() % 21);
-                        int randnum6 = (arc4random() % 51) - 25;
-                        
-                        asteroidID++;
-                        
-                        bool randnum3 = arc4random() % 2;
-                        NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithFloat:randnum1], [NSNumber numberWithFloat:randnum2], [NSNumber numberWithBool:randnum3], [NSNumber numberWithFloat:(float)randnum4/50.0], [NSNumber numberWithFloat:(float)randnum5/20.0], [NSNumber numberWithFloat:((float)randnum6/15.0)*0.42], [NSNumber numberWithInt:asteroidID], nil];
-                        [generatedObjects addObject:object1Attributes];
-                        objectName = nil;
-                        object1Attributes = nil;
-                        
-                        //writes initial map to database
-                        [[[ref child:@"asteroids"] child:[NSString stringWithFormat:@"%i",asteroidID]] setValue:@{@"posX": [NSNumber numberWithInt:randnum1] ,@"posZ": [NSNumber numberWithInt:randnum2]}];
-                    }
-                }
-            }
-            
-            [[ref child:@"numOfAsteroids"] setValue:[NSNumber numberWithInt:numAsts]];
-            [[ref child:@"gameState"] setValue:[NSNumber numberWithInt:0]];
-            
-            for (int int1 = 0; int1 <= 0; int1++) {
-                NSString *objectName = @"pool1";
+        NSMutableArray *object0Attributes = [[NSMutableArray alloc] initWithObjects:objectName0, [NSNumber numberWithFloat:randnumPosX], [NSNumber numberWithFloat:randnumPosZ], [NSNumber numberWithBool:0], [NSNumber numberWithFloat:randnumPosY], [NSNumber numberWithFloat:(float)randSizeCoeff/10.0], [NSNumber numberWithFloat:twinklingOffset], [NSNumber numberWithFloat:((float)randOpac+40.0)/90.0], nil];
+        [generatedObjects addObject:object0Attributes];
+        object0Attributes = nil;
+        
+        objectName0 = nil;
+    }
+    
+    //environment
+    //FLAG - IMPORTANT BOOLEAN HERE
+    playerIDHWL = 1;
+    [[NSUserDefaults standardUserDefaults] setInteger:playerIDHWL forKey:@"playerID"];
+    if (playerIDHWL == 0) {
+        
+        //clears database
+        [[ref child:@"asteroids"] removeValue];
+        [[ref child:@"projectilesToAdd"] removeValue];
+        [[[ref child:@"angle"] child:@"angle"] setValue:[NSNumber numberWithFloat:0.0]];
+        [[[ref child:@"rpm"] child:@"rpm"] setValue:[NSNumber numberWithFloat:0.0]];
+        
+        //initial asteroids
+        int asteroidID = 0;
+        int numAsts = 0;
+        for (int int1 = 0; int1 <= 11; int1++) {
+            for (int int2 = 0; int2 <= 15; int2++) {
                 
-                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:-50], nil];
-                [generatedObjects addObject:object1Attributes];
-                object1Attributes = nil;
+                int createAsteroid = arc4random() % 3;
                 
-                objectName = nil;
-            }
-            for (int int1 = 0; int1 <= 0; int1++) {
-                NSString *objectName = @"pool1";
-                
-                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:50], nil];
-                [generatedObjects addObject:object1Attributes];
-                object1Attributes = nil;
-                
-                objectName = nil;
-            }
-            for (int int1 = 0; int1 <= 0; int1++) {
-                NSString *objectName = @"pool2";
-                
-                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:49], nil];
-                [generatedObjects addObject:object1Attributes];
-                object1Attributes = nil;
-                
-                objectName = nil;
-            }
-            for (int int1 = 0; int1 <= 0; int1++) {
-                NSString *objectName = @"chair1";
-                
-                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:0], [NSNumber numberWithInt:-37], [NSNumber numberWithBool:(arc4random() % 2)], [NSNumber numberWithInt:-21], nil];
-                [generatedObjects addObject:object1Attributes];
-                object1Attributes = nil;
-                
-                objectName = nil;
-            }
-            for (int int1 = 0; int1 <= 0; int1++) {
-                NSString *objectName = @"wheel1";
-                
-                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:0], [NSNumber numberWithInt:37], [NSNumber numberWithBool:(arc4random() % 2)], [NSNumber numberWithInt:-24], nil];
-                [generatedObjects addObject:object1Attributes];
-                object1Attributes = nil;
-                
-                objectName = nil;
-            }
-            
-            [[NSUserDefaults standardUserDefaults] setObject:generatedObjects forKey:@"generatedObjects"];
-            generatedObjects = nil;
-            heatmapwradius = nil;
-            
-            printf("DONE GENERATING\n");
-            
-            [self initGame];
-        } else {
-            
-            [[ref child:@"projectilesToAdd"] removeValue];
-            
-            //pulls asteroid data from firebase
-            
-            [[ref child:@"asteroids"] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-                NSArray *postDict = snapshot.value;
-                
-                for (int index = 1; index <= postDict.count-1; index++) {
+                if (createAsteroid == 1) {
+                    numAsts++;
                     NSString *objectName = @"rock3";
                     int randName = arc4random() % 4;
                     if (randName == 1) {
@@ -376,48 +274,144 @@
                         objectName = @"rock6";
                     }
                     
-                    float randnum1 = [[postDict[index] valueForKey:@"posX"] floatValue];
-                    float randnum2 = [[postDict[index] valueForKey:@"posZ"] floatValue];
+                    float randnum1 = ((float)int1-5.0)*88.0;
+                    float randnum2 = ((float)int2+1.2)*240.0;
                     
                     int randnum4 = (arc4random() % 2001) - 1000;
                     int randnum5 = (arc4random() % 21);
                     int randnum6 = (arc4random() % 51) - 25;
                     
+                    asteroidID++;
+                    
                     bool randnum3 = arc4random() % 2;
-                    NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithFloat:randnum1], [NSNumber numberWithFloat:randnum2], [NSNumber numberWithBool:randnum3], [NSNumber numberWithFloat:(float)randnum4/50.0], [NSNumber numberWithFloat:(float)randnum5/20.0], [NSNumber numberWithFloat:((float)randnum6/15.0)*0.42], [NSNumber numberWithInt:index], nil];
+                    NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithFloat:randnum1], [NSNumber numberWithFloat:randnum2], [NSNumber numberWithBool:randnum3], [NSNumber numberWithFloat:(float)randnum4/50.0], [NSNumber numberWithFloat:(float)randnum5/20.0], [NSNumber numberWithFloat:((float)randnum6/15.0)*0.42], [NSNumber numberWithInt:asteroidID], nil];
                     [generatedObjects addObject:object1Attributes];
                     objectName = nil;
                     object1Attributes = nil;
+                    
+                    //writes initial map to database
+                    [[[ref child:@"asteroids"] child:[NSString stringWithFormat:@"%i",asteroidID]] setValue:@{@"posX": [NSNumber numberWithInt:randnum1] ,@"posZ": [NSNumber numberWithInt:randnum2]}];
                 }
-                
-                for (int int1 = 0; int1 <= 0; int1++) {
-                    NSString *objectName = @"pool3";
-                    
-                    NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:-45], nil];
-                    [generatedObjects addObject:object1Attributes];
-                    object1Attributes = nil;
-                    
-                    objectName = nil;
-                }
-                for (int int1 = 0; int1 <= 0; int1++) {
-                    NSString *objectName = @"wheel1";
-                    
-                    NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:0], [NSNumber numberWithInt:35], [NSNumber numberWithBool:(arc4random() % 2)], [NSNumber numberWithInt:-23], nil];
-                    [generatedObjects addObject:object1Attributes];
-                    object1Attributes = nil;
-                    
-                    objectName = nil;
-                }
-                
-                [[NSUserDefaults standardUserDefaults] setObject:generatedObjects forKey:@"generatedObjects"];
-                
-                printf("DONE GENERATING\n");
-                
-                [self initGame];
-            } withCancelBlock:^(NSError * _Nonnull error) {
-                NSLog(@"%@", error.localizedDescription);
-            }];
+            }
         }
+        
+        [[ref child:@"numOfAsteroids"] setValue:[NSNumber numberWithInt:numAsts]];
+        [[ref child:@"gameState"] setValue:[NSNumber numberWithInt:0]];
+        
+        for (int int1 = 0; int1 <= 0; int1++) {
+            NSString *objectName = @"pool1";
+            
+            NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:-50], nil];
+            [generatedObjects addObject:object1Attributes];
+            object1Attributes = nil;
+            
+            objectName = nil;
+        }
+        for (int int1 = 0; int1 <= 0; int1++) {
+            NSString *objectName = @"pool1";
+            
+            NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:50], nil];
+            [generatedObjects addObject:object1Attributes];
+            object1Attributes = nil;
+            
+            objectName = nil;
+        }
+        for (int int1 = 0; int1 <= 0; int1++) {
+            NSString *objectName = @"pool2";
+            
+            NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:49], nil];
+            [generatedObjects addObject:object1Attributes];
+            object1Attributes = nil;
+            
+            objectName = nil;
+        }
+        for (int int1 = 0; int1 <= 0; int1++) {
+            NSString *objectName = @"chair1";
+            
+            NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:0], [NSNumber numberWithInt:-37], [NSNumber numberWithBool:(arc4random() % 2)], [NSNumber numberWithInt:-21], nil];
+            [generatedObjects addObject:object1Attributes];
+            object1Attributes = nil;
+            
+            objectName = nil;
+        }
+        for (int int1 = 0; int1 <= 0; int1++) {
+            NSString *objectName = @"wheel1";
+            
+            NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:0], [NSNumber numberWithInt:37], [NSNumber numberWithBool:(arc4random() % 2)], [NSNumber numberWithInt:-24], nil];
+            [generatedObjects addObject:object1Attributes];
+            object1Attributes = nil;
+            
+            objectName = nil;
+        }
+        
+        [[NSUserDefaults standardUserDefaults] setObject:generatedObjects forKey:@"generatedObjects"];
+        generatedObjects = nil;
+        heatmapwradius = nil;
+        
+        printf("DONE GENERATING\n");
+        
+        [self initGame];
+    } else {
+        
+        [[ref child:@"projectilesToAdd"] removeValue];
+        
+        //pulls asteroid data from firebase
+        
+        [[ref child:@"asteroids"] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            NSArray *postDict = snapshot.value;
+            
+            for (int index = 1; index <= postDict.count-1; index++) {
+                NSString *objectName = @"rock3";
+                int randName = arc4random() % 4;
+                if (randName == 1) {
+                    objectName = @"rock4";
+                } else if (randName == 2) {
+                    objectName = @"rock5";
+                } else if (randName == 3) {
+                    objectName = @"rock6";
+                }
+                
+                float randnum1 = [[postDict[index] valueForKey:@"posX"] floatValue];
+                float randnum2 = [[postDict[index] valueForKey:@"posZ"] floatValue];
+                
+                int randnum4 = (arc4random() % 2001) - 1000;
+                int randnum5 = (arc4random() % 21);
+                int randnum6 = (arc4random() % 51) - 25;
+                
+                bool randnum3 = arc4random() % 2;
+                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithFloat:randnum1], [NSNumber numberWithFloat:randnum2], [NSNumber numberWithBool:randnum3], [NSNumber numberWithFloat:(float)randnum4/50.0], [NSNumber numberWithFloat:(float)randnum5/20.0], [NSNumber numberWithFloat:((float)randnum6/15.0)*0.42], [NSNumber numberWithInt:index], nil];
+                [generatedObjects addObject:object1Attributes];
+                objectName = nil;
+                object1Attributes = nil;
+            }
+            
+            for (int int1 = 0; int1 <= 0; int1++) {
+                NSString *objectName = @"pool3";
+                
+                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:1], [NSNumber numberWithInt:1], [NSNumber numberWithBool:0], [NSNumber numberWithInt:-45], nil];
+                [generatedObjects addObject:object1Attributes];
+                object1Attributes = nil;
+                
+                objectName = nil;
+            }
+            for (int int1 = 0; int1 <= 0; int1++) {
+                NSString *objectName = @"wheel1";
+                
+                NSMutableArray *object1Attributes = [[NSMutableArray alloc] initWithObjects:objectName, [NSNumber numberWithInt:0], [NSNumber numberWithInt:35], [NSNumber numberWithBool:(arc4random() % 2)], [NSNumber numberWithInt:-23], nil];
+                [generatedObjects addObject:object1Attributes];
+                object1Attributes = nil;
+                
+                objectName = nil;
+            }
+            
+            [[NSUserDefaults standardUserDefaults] setObject:generatedObjects forKey:@"generatedObjects"];
+            
+            printf("DONE GENERATING\n");
+            
+            [self initGame];
+        } withCancelBlock:^(NSError * _Nonnull error) {
+            NSLog(@"%@", error.localizedDescription);
+        }];
     }
 }
 
@@ -523,6 +517,8 @@
         eyeguard2.scaleY = 3.05*2.0*(winSize.height/750.0)*iPhone6plusOffset;
         eyeguard2.position = ccp(3*(winSize.width/2.0),winSize.height);
         [self addChild:eyeguard2 z:3 name:@"eyeguard2"];
+        
+        queueUpdate = 1;
     }
 }
 
@@ -556,7 +552,7 @@
 
 - (void)act {
     //vr updates partner eye distance
-    if (vrModeOn != vrModeOnRefresh) {
+    if (vrModeOn != vrModeOnRefresh && queueUpdate == 1) {
         vrModeOnRefresh = vrModeOn;
         
         [(AppDelegate *)[[UIApplication sharedApplication] delegate] updateVRModeAD:vrModeOn];

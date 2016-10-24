@@ -223,24 +223,6 @@
 		FC58CEE41D8DA6BD0087DBA7 /* asteroid4_2.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEDA1D8DA6BD0087DBA7 /* asteroid4_2.png */; };
 		FC58CEE51D8DA6BD0087DBA7 /* blackbar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEDB1D8DA6BD0087DBA7 /* blackbar-hd.png */; };
 		FC58CEE61D8DA6BD0087DBA7 /* blackbar.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEDC1D8DA6BD0087DBA7 /* blackbar.png */; };
-		FC58CF011D8DA6D30087DBA7 /* controls_emptykey-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEE71D8DA6D30087DBA7 /* controls_emptykey-hd.png */; };
-		FC58CF021D8DA6D30087DBA7 /* controls_emptykey.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEE81D8DA6D30087DBA7 /* controls_emptykey.png */; };
-		FC58CF031D8DA6D30087DBA7 /* controls_look-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEE91D8DA6D30087DBA7 /* controls_look-hd.png */; };
-		FC58CF041D8DA6D30087DBA7 /* controls_look.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEEA1D8DA6D30087DBA7 /* controls_look.png */; };
-		FC58CF051D8DA6D30087DBA7 /* controls_moveslider-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEEB1D8DA6D30087DBA7 /* controls_moveslider-hd.png */; };
-		FC58CF061D8DA6D30087DBA7 /* controls_moveslider.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEEC1D8DA6D30087DBA7 /* controls_moveslider.png */; };
-		FC58CF071D8DA6D30087DBA7 /* controls_pickup-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEED1D8DA6D30087DBA7 /* controls_pickup-hd.png */; };
-		FC58CF081D8DA6D30087DBA7 /* controls_pickup.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEEE1D8DA6D30087DBA7 /* controls_pickup.png */; };
-		FC58CF091D8DA6D30087DBA7 /* controls_rotate-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEEF1D8DA6D30087DBA7 /* controls_rotate-hd.png */; };
-		FC58CF0A1D8DA6D30087DBA7 /* controls_rotate.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF01D8DA6D30087DBA7 /* controls_rotate.png */; };
-		FC58CF0B1D8DA6D30087DBA7 /* controls_scroll-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF11D8DA6D30087DBA7 /* controls_scroll-hd.png */; };
-		FC58CF0C1D8DA6D30087DBA7 /* controls_scroll.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF21D8DA6D30087DBA7 /* controls_scroll.png */; };
-		FC58CF0D1D8DA6D30087DBA7 /* controls_space-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF31D8DA6D30087DBA7 /* controls_space-hd.png */; };
-		FC58CF0E1D8DA6D30087DBA7 /* controls_space.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF41D8DA6D30087DBA7 /* controls_space.png */; };
-		FC58CF0F1D8DA6D30087DBA7 /* controls_throw-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF51D8DA6D30087DBA7 /* controls_throw-hd.png */; };
-		FC58CF101D8DA6D30087DBA7 /* controls_throw.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF61D8DA6D30087DBA7 /* controls_throw.png */; };
-		FC58CF111D8DA6D30087DBA7 /* controls_wsad-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF71D8DA6D30087DBA7 /* controls_wsad-hd.png */; };
-		FC58CF121D8DA6D30087DBA7 /* controls_wsad.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF81D8DA6D30087DBA7 /* controls_wsad.png */; };
 		FC58CF131D8DA6D30087DBA7 /* crosshair-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEF91D8DA6D30087DBA7 /* crosshair-hd.png */; };
 		FC58CF141D8DA6D30087DBA7 /* crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEFA1D8DA6D30087DBA7 /* crosshair.png */; };
 		FC58CF151D8DA6D30087DBA7 /* crosshairwhite-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CEFB1D8DA6D30087DBA7 /* crosshairwhite-hd.png */; };
@@ -254,10 +236,6 @@
 		FC58CF201D8DA6EE0087DBA7 /* ground3_2.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF1F1D8DA6EE0087DBA7 /* ground3_2.png */; };
 		FC58CF321D8DA70B0087DBA7 /* IVarrow-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF211D8DA70B0087DBA7 /* IVarrow-hd.png */; };
 		FC58CF331D8DA70B0087DBA7 /* IVarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF221D8DA70B0087DBA7 /* IVarrow.png */; };
-		FC58CF341D8DA70B0087DBA7 /* joystick-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF231D8DA70B0087DBA7 /* joystick-hd.png */; };
-		FC58CF351D8DA70B0087DBA7 /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF241D8DA70B0087DBA7 /* joystick.png */; };
-		FC58CF361D8DA70B0087DBA7 /* joystickbg-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF251D8DA70B0087DBA7 /* joystickbg-hd.png */; };
-		FC58CF371D8DA70B0087DBA7 /* joystickbg.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF261D8DA70B0087DBA7 /* joystickbg.png */; };
 		FC58CF381D8DA70B0087DBA7 /* planet1.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF271D8DA70B0087DBA7 /* planet1.png */; };
 		FC58CF391D8DA70B0087DBA7 /* planet1ring.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF281D8DA70B0087DBA7 /* planet1ring.png */; };
 		FC58CF3A1D8DA70B0087DBA7 /* resettodefault-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = FC58CF291D8DA70B0087DBA7 /* resettodefault-hd.png */; };
@@ -804,24 +782,6 @@
 		FC58CEDA1D8DA6BD0087DBA7 /* asteroid4_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = asteroid4_2.png; sourceTree = "<group>"; };
 		FC58CEDB1D8DA6BD0087DBA7 /* blackbar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackbar-hd.png"; sourceTree = "<group>"; };
 		FC58CEDC1D8DA6BD0087DBA7 /* blackbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackbar.png; sourceTree = "<group>"; };
-		FC58CEE71D8DA6D30087DBA7 /* controls_emptykey-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_emptykey-hd.png"; sourceTree = "<group>"; };
-		FC58CEE81D8DA6D30087DBA7 /* controls_emptykey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_emptykey.png; sourceTree = "<group>"; };
-		FC58CEE91D8DA6D30087DBA7 /* controls_look-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_look-hd.png"; sourceTree = "<group>"; };
-		FC58CEEA1D8DA6D30087DBA7 /* controls_look.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_look.png; sourceTree = "<group>"; };
-		FC58CEEB1D8DA6D30087DBA7 /* controls_moveslider-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_moveslider-hd.png"; sourceTree = "<group>"; };
-		FC58CEEC1D8DA6D30087DBA7 /* controls_moveslider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_moveslider.png; sourceTree = "<group>"; };
-		FC58CEED1D8DA6D30087DBA7 /* controls_pickup-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_pickup-hd.png"; sourceTree = "<group>"; };
-		FC58CEEE1D8DA6D30087DBA7 /* controls_pickup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_pickup.png; sourceTree = "<group>"; };
-		FC58CEEF1D8DA6D30087DBA7 /* controls_rotate-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_rotate-hd.png"; sourceTree = "<group>"; };
-		FC58CEF01D8DA6D30087DBA7 /* controls_rotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_rotate.png; sourceTree = "<group>"; };
-		FC58CEF11D8DA6D30087DBA7 /* controls_scroll-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_scroll-hd.png"; sourceTree = "<group>"; };
-		FC58CEF21D8DA6D30087DBA7 /* controls_scroll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_scroll.png; sourceTree = "<group>"; };
-		FC58CEF31D8DA6D30087DBA7 /* controls_space-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_space-hd.png"; sourceTree = "<group>"; };
-		FC58CEF41D8DA6D30087DBA7 /* controls_space.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_space.png; sourceTree = "<group>"; };
-		FC58CEF51D8DA6D30087DBA7 /* controls_throw-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_throw-hd.png"; sourceTree = "<group>"; };
-		FC58CEF61D8DA6D30087DBA7 /* controls_throw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_throw.png; sourceTree = "<group>"; };
-		FC58CEF71D8DA6D30087DBA7 /* controls_wsad-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "controls_wsad-hd.png"; sourceTree = "<group>"; };
-		FC58CEF81D8DA6D30087DBA7 /* controls_wsad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_wsad.png; sourceTree = "<group>"; };
 		FC58CEF91D8DA6D30087DBA7 /* crosshair-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosshair-hd.png"; sourceTree = "<group>"; };
 		FC58CEFA1D8DA6D30087DBA7 /* crosshair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshair.png; sourceTree = "<group>"; };
 		FC58CEFB1D8DA6D30087DBA7 /* crosshairwhite-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosshairwhite-hd.png"; sourceTree = "<group>"; };
@@ -835,10 +795,6 @@
 		FC58CF1F1D8DA6EE0087DBA7 /* ground3_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ground3_2.png; sourceTree = "<group>"; };
 		FC58CF211D8DA70B0087DBA7 /* IVarrow-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IVarrow-hd.png"; sourceTree = "<group>"; };
 		FC58CF221D8DA70B0087DBA7 /* IVarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IVarrow.png; sourceTree = "<group>"; };
-		FC58CF231D8DA70B0087DBA7 /* joystick-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-hd.png"; sourceTree = "<group>"; };
-		FC58CF241D8DA70B0087DBA7 /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
-		FC58CF251D8DA70B0087DBA7 /* joystickbg-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystickbg-hd.png"; sourceTree = "<group>"; };
-		FC58CF261D8DA70B0087DBA7 /* joystickbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystickbg.png; sourceTree = "<group>"; };
 		FC58CF271D8DA70B0087DBA7 /* planet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = planet1.png; sourceTree = "<group>"; };
 		FC58CF281D8DA70B0087DBA7 /* planet1ring.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = planet1ring.png; sourceTree = "<group>"; };
 		FC58CF291D8DA70B0087DBA7 /* resettodefault-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resettodefault-hd.png"; sourceTree = "<group>"; };
@@ -977,24 +933,6 @@
 				FC58CEDA1D8DA6BD0087DBA7 /* asteroid4_2.png */,
 				FC58CEDB1D8DA6BD0087DBA7 /* blackbar-hd.png */,
 				FC58CEDC1D8DA6BD0087DBA7 /* blackbar.png */,
-				FC58CEE71D8DA6D30087DBA7 /* controls_emptykey-hd.png */,
-				FC58CEE81D8DA6D30087DBA7 /* controls_emptykey.png */,
-				FC58CEE91D8DA6D30087DBA7 /* controls_look-hd.png */,
-				FC58CEEA1D8DA6D30087DBA7 /* controls_look.png */,
-				FC58CEEB1D8DA6D30087DBA7 /* controls_moveslider-hd.png */,
-				FC58CEEC1D8DA6D30087DBA7 /* controls_moveslider.png */,
-				FC58CEED1D8DA6D30087DBA7 /* controls_pickup-hd.png */,
-				FC58CEEE1D8DA6D30087DBA7 /* controls_pickup.png */,
-				FC58CEEF1D8DA6D30087DBA7 /* controls_rotate-hd.png */,
-				FC58CEF01D8DA6D30087DBA7 /* controls_rotate.png */,
-				FC58CEF11D8DA6D30087DBA7 /* controls_scroll-hd.png */,
-				FC58CEF21D8DA6D30087DBA7 /* controls_scroll.png */,
-				FC58CEF31D8DA6D30087DBA7 /* controls_space-hd.png */,
-				FC58CEF41D8DA6D30087DBA7 /* controls_space.png */,
-				FC58CEF51D8DA6D30087DBA7 /* controls_throw-hd.png */,
-				FC58CEF61D8DA6D30087DBA7 /* controls_throw.png */,
-				FC58CEF71D8DA6D30087DBA7 /* controls_wsad-hd.png */,
-				FC58CEF81D8DA6D30087DBA7 /* controls_wsad.png */,
 				FC58CEF91D8DA6D30087DBA7 /* crosshair-hd.png */,
 				FC58CEFA1D8DA6D30087DBA7 /* crosshair.png */,
 				FC58CEFB1D8DA6D30087DBA7 /* crosshairwhite-hd.png */,
@@ -1008,10 +946,6 @@
 				FC58CF1F1D8DA6EE0087DBA7 /* ground3_2.png */,
 				FC58CF211D8DA70B0087DBA7 /* IVarrow-hd.png */,
 				FC58CF221D8DA70B0087DBA7 /* IVarrow.png */,
-				FC58CF231D8DA70B0087DBA7 /* joystick-hd.png */,
-				FC58CF241D8DA70B0087DBA7 /* joystick.png */,
-				FC58CF251D8DA70B0087DBA7 /* joystickbg-hd.png */,
-				FC58CF261D8DA70B0087DBA7 /* joystickbg.png */,
 				FC58CF271D8DA70B0087DBA7 /* planet1.png */,
 				FC58CF281D8DA70B0087DBA7 /* planet1ring.png */,
 				FC58CF291D8DA70B0087DBA7 /* resettodefault-hd.png */,
@@ -1987,18 +1921,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC58CF051D8DA6D30087DBA7 /* controls_moveslider-hd.png in Resources */,
-				FC58CF041D8DA6D30087DBA7 /* controls_look.png in Resources */,
 				FC2117C81D8ED40C008446EF /* Blip 008.wav in Resources */,
 				FC58CF641D8DA7160087DBA7 /* text_moveleft.png in Resources */,
 				FC58CF5D1D8DA7160087DBA7 /* text_jump-hd.png in Resources */,
 				FC58CEB11D8DA30B0087DBA7 /* Images.xcassets in Resources */,
 				FC58CEE11D8DA6BD0087DBA7 /* asteroid3_1.png in Resources */,
-				FC58CF0E1D8DA6D30087DBA7 /* controls_space.png in Resources */,
 				FC58CEE41D8DA6BD0087DBA7 /* asteroid4_2.png in Resources */,
 				FC58CF171D8DA6D30087DBA7 /* dust.png in Resources */,
 				FC58CEDE1D8DA6BD0087DBA7 /* asteroid1_2.png in Resources */,
-				FC58CF111D8DA6D30087DBA7 /* controls_wsad-hd.png in Resources */,
 				FC58CF5F1D8DA7160087DBA7 /* text_movebackward-hd.png in Resources */,
 				FC38A0141D8E599000C112C5 /* finishflag.png in Resources */,
 				FC58CF911D8DA72B0087DBA7 /* vrTurnOffVR-hd.png in Resources */,
@@ -2007,7 +1937,6 @@
 				FCACC8B31D8DCA31009C45DA /* spaceshipinterior1_1.png in Resources */,
 				FC58CF671D8DA7160087DBA7 /* text_pickupdrop-hd.png in Resources */,
 				FC58CF1A1D8DA6D30087DBA7 /* eyeguard.png in Resources */,
-				FC58CF031D8DA6D30087DBA7 /* controls_look-hd.png in Resources */,
 				FC3F54B41D8DA0C200FD433A /* LICENSE_Chipmunk.txt in Resources */,
 				FC58CF8D1D8DA72B0087DBA7 /* vrHUDbg-hd.png in Resources */,
 				FC3F54C11D8DA0C200FD433A /* white_square.png in Resources */,
@@ -2016,20 +1945,16 @@
 				FC58CF7A1D8DA71E0087DBA7 /* title_eyedist.png in Resources */,
 				FC58CF5E1D8DA7160087DBA7 /* text_jump.png in Resources */,
 				FC58CF8B1D8DA72B0087DBA7 /* vrHhelpcontrols-hd.png in Resources */,
-				FC58CF341D8DA70B0087DBA7 /* joystick-hd.png in Resources */,
 				FC58CEE01D8DA6BD0087DBA7 /* asteroid2_2.png in Resources */,
 				FC58CF7C1D8DA71E0087DBA7 /* title_instr1.png in Resources */,
 				FC58CF8E1D8DA72B0087DBA7 /* vrHUDbg.png in Resources */,
 				FC58CF161D8DA6D30087DBA7 /* crosshairwhite.png in Resources */,
 				FC58CF411D8DA70B0087DBA7 /* sliderbar.png in Resources */,
 				FC58CF6B1D8DA7160087DBA7 /* text_rotateright-hd.png in Resources */,
-				FC58CF371D8DA70B0087DBA7 /* joystickbg.png in Resources */,
 				FC58CF591D8DA7160087DBA7 /* text_closeopen-hd.png in Resources */,
 				FC58CEE61D8DA6BD0087DBA7 /* blackbar.png in Resources */,
 				FC58CF151D8DA6D30087DBA7 /* crosshairwhite-hd.png in Resources */,
-				FC58CF0F1D8DA6D30087DBA7 /* controls_throw-hd.png in Resources */,
 				FC58CF391D8DA70B0087DBA7 /* planet1ring.png in Resources */,
-				FC58CF081D8DA6D30087DBA7 /* controls_pickup.png in Resources */,
 				FC58CF6C1D8DA7160087DBA7 /* text_rotateright.png in Resources */,
 				FC3F530F1D8DA0C100FD433A /* LICENSE_cocos2d.txt in Resources */,
 				FC58CF791D8DA71E0087DBA7 /* title_eyedist-hd.png in Resources */,
@@ -2052,13 +1977,9 @@
 				FC58CF201D8DA6EE0087DBA7 /* ground3_2.png in Resources */,
 				FC58CF3C1D8DA70B0087DBA7 /* shine1.png in Resources */,
 				FC58CF141D8DA6D30087DBA7 /* crosshair.png in Resources */,
-				FC58CF011D8DA6D30087DBA7 /* controls_emptykey-hd.png in Resources */,
 				FC58CF601D8DA7160087DBA7 /* text_movebackward.png in Resources */,
 				FC58CF181D8DA6D30087DBA7 /* dustcloud.png in Resources */,
-				FC58CF0C1D8DA6D30087DBA7 /* controls_scroll.png in Resources */,
 				FC58CF921D8DA72B0087DBA7 /* vrTurnOffVR.png in Resources */,
-				FC58CF0B1D8DA6D30087DBA7 /* controls_scroll-hd.png in Resources */,
-				FC58CF101D8DA6D30087DBA7 /* controls_throw.png in Resources */,
 				FC58CF651D8DA7160087DBA7 /* text_moveright-hd.png in Resources */,
 				FC58CF891D8DA72B0087DBA7 /* vrConnectKeyboard-hd.png in Resources */,
 				FC58CEDD1D8DA6BD0087DBA7 /* asteroid1_1.png in Resources */,
@@ -2072,9 +1993,7 @@
 				FC3F53E91D8DA0C100FD433A /* LICENSE_CCBReader.txt in Resources */,
 				FC6B37D01D8E4FF4002D672D /* GoogleService-Info.plist in Resources */,
 				FC58CF661D8DA7160087DBA7 /* text_moveright.png in Resources */,
-				FC58CF0D1D8DA6D30087DBA7 /* controls_space-hd.png in Resources */,
 				FC3F522D1D8DA0C000FD433A /* iTunesArtwork@2x in Resources */,
-				FC58CF091D8DA6D30087DBA7 /* controls_rotate-hd.png in Resources */,
 				FC2117C41D8ED349008446EF /* Blip 019.wav in Resources */,
 				FC58CF8C1D8DA72B0087DBA7 /* vrHhelpcontrols.png in Resources */,
 				FC58CF3A1D8DA70B0087DBA7 /* resettodefault-hd.png in Resources */,
@@ -2085,22 +2004,15 @@
 				FC58CF771D8DA71E0087DBA7 /* title_cands-hd.png in Resources */,
 				FC58CF421D8DA70B0087DBA7 /* star.png in Resources */,
 				FC58CF611D8DA7160087DBA7 /* text_moveforward-hd.png in Resources */,
-				FC58CF0A1D8DA6D30087DBA7 /* controls_rotate.png in Resources */,
-				FC58CF071D8DA6D30087DBA7 /* controls_pickup-hd.png in Resources */,
-				FC58CF021D8DA6D30087DBA7 /* controls_emptykey.png in Resources */,
-				FC58CF351D8DA70B0087DBA7 /* joystick.png in Resources */,
 				FC58CF621D8DA7160087DBA7 /* text_moveforward.png in Resources */,
-				FC58CF361D8DA70B0087DBA7 /* joystickbg-hd.png in Resources */,
 				FC58CF691D8DA7160087DBA7 /* text_rotateleft-hd.png in Resources */,
 				FC58CF131D8DA6D30087DBA7 /* crosshair-hd.png in Resources */,
 				FC58CF1D1D8DA6DE0087DBA7 /* floorshade-hd.png in Resources */,
 				FC58CF6A1D8DA7160087DBA7 /* text_rotateleft.png in Resources */,
 				FC58CF681D8DA7160087DBA7 /* text_pickupdrop.png in Resources */,
 				FC58CF7D1D8DA71E0087DBA7 /* title_instr2-hd.png in Resources */,
-				FC58CF121D8DA6D30087DBA7 /* controls_wsad.png in Resources */,
 				FC2117C21D8E9D36008446EF /* congrats.png in Resources */,
 				FC58CF7E1D8DA71E0087DBA7 /* title_instr2.png in Resources */,
-				FC58CF061D8DA6D30087DBA7 /* controls_moveslider.png in Resources */,
 				FC38A0151D8E599000C112C5 /* redwarning.png in Resources */,
 				FC58CF191D8DA6D30087DBA7 /* eyeguard-hd.png in Resources */,
 				FC58CF631D8DA7160087DBA7 /* text_moveleft-hd.png in Resources */,
